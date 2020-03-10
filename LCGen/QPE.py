@@ -30,7 +30,7 @@ t_initial = np.random.uniform(0, t_rec, size=N)
 #set width & height of QPEs for each curve
 width = np.random.uniform(high=0.25, size=N) * t_rec
 #modify heights to reflect a wider time frame and a lower gaussian.
-height = (1+np.random.poisson(lam=5, size=N))*(T/(10*QPE_No))
+height = (1+np.random.poisson(lam=10, size=N))*(T/(10*QPE_No))
 
 results = np.zeros((int(2*N), steps))
 for i in range(N):

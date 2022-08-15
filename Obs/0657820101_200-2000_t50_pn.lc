@@ -1,0 +1,273 @@
+SIMPLE  =                    T / file does conform to FITS standard             BITPIX  =                    8 / number of bits per data pixel                  NAXIS   =                    0 / number of data axes                            EXTEND  =                    T / FITS dataset may contain extensions            XPROC0  = 'epiclccorr srctslist=0657820101_200-2000_t50_raw.lc eventlist=06578&'CONTINUE  '20101_pn.fits outset=0657820101_200-2000_t50_pn.lc bkgtslist=065782&'CONTINUE  '0101_200-2000_t50_bkg.lc withbkgset=yes detxbins=5 detybins=5 withd&'CONTINUE  'etbins=no sourcecoords=eqpos sourcex=0 sourcey=0 withsourcepos=no a&'CONTINUE  'pplyabsolutecorrections=yes allcamera=no # (epiclccorr-1.21.1) [xmm&'CONTINUE  'sas_20170719_1539-16.1.0]'                                           XDAL0   = '0657820101_200-2000_t50_pn.lc 2020-10-08T14:56:20.000 Create epiclc&'CONTINUE  'corr (epiclccorr-1.21.1) [xmmsas_20170719_1539-16.1.0] High SAS_MEM&'CONTINUE  'ORY_MODEL= SAS_ROWS= SAS_ZERO_ROWS= SAS_COLUMN_WISE= '               CREATOR = 'epiclccorr (epiclccorr-1.21.1) [xmmsas_20170719_1539-16.1.0]' / name DATE    = '2020-10-08T14:56:20.000' / creation date                             LONGSTRN= 'OGIP 1.0'                                                            TELESCOP= 'XMM     '           / XMM Mission                                    INSTRUME= 'EPN     '           / Instrument name                                OBS_ID  = '0657820101'         / Observation Identifier                         OBJECT  = 'GSN 069 '           / Name of observed object                        OBSERVER= 'Dr NORBERT SCHARTEL (PS)' / Name of observer                         EXPIDSTR= 'S001    '           / Exposure ID                                    HISTORY Created by epiclccorr (epiclccorr-1.21.1) [xmmsas_20170719_1539-16.1.0] HISTORY at 2020-10-08T14:56:20                                                  END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional binary table                     NAXIS1  =                   28 / width of table in bytes                        NAXIS2  =                  261 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group (required keyword)              TFIELDS =                    6 / number of fields in each row                   TTYPE1  = 'TIME    '           / Time of the center of each frame               TFORM1  = 'D       '           / data format of field: 8-byte DOUBLE            TUNIT1  = 's       '           / physical unit of field                         TTYPE2  = 'RATE    '           / Source Count Rate                              TFORM2  = 'E       '           / data format of field: 4-byte REAL              TUNIT2  = 'count/s '           / physical unit of field                         TTYPE3  = 'ERROR   '           / Error in Source light curve                    TFORM3  = 'E       '           / data format of field: 4-byte REAL              TUNIT3  = 'count/s '           / physical unit of field                         TTYPE4  = 'FRACEXP '           / effective time / real time                     TFORM4  = 'E       '           / data format of field: 4-byte REAL              TUNIT4  = 'fraction'           / physical unit of field                         TTYPE5  = 'BACKV   '           / Bkg rate normalized to src area                TFORM5  = 'E       '           / data format of field: 4-byte REAL              TUNIT5  = 'count/s '           / physical unit of field                         TTYPE6  = 'BACKE   '           / Error in bkg normalized to src area            TFORM6  = 'E       '           / data format of field: 4-byte REAL              TUNIT6  = 'count/s '           / physical unit of field                         EXTNAME = 'RATE    '           / The name of this table                         EXP_ID  = '0657820101001'      / Exposure Identifier                            TELESCOP= 'XMM     '           / XMM Mission                                    INSTRUME= 'EPN     '           / Instrument name                                OBS_ID  = '0657820101'         / Observation Identifier                         OBJECT  = 'GSN 069 '           / Name of observed object                        OBSERVER= 'Dr NORBERT SCHARTEL (PS)' / Name of observer                         EXPIDSTR= 'S001    '           / Exposure ID                                    FILTER  = 'Thin1   '           / Filter ID                                      MJDREF  = 5.08140000000000E+04 / [d] 1998-01-01T00:00:00 (TT) expressed in MJD (HDUCLASS= 'OGIP    '           / Format conforms to OGIP/GSFC conventions       HDUCLAS1= 'LIGHTCURVE'         / File contains a time-serie                     TSTART  = 4.07675308042814E+08 / Light curve start time                         TSTOP   = 4.07688358042814E+08 / Light curve end time                           HDUCLAS2= 'NET     '           / File contains bkg subtracted rates             HDUCLAS3= 'RATE    '           / Light curve stored as rates                    HDUVERS1= '1.1.0   '           / Version of format                              SLCTEXPR= '( CCDNR in [1] && gti(0657820101_200-2000_t50_raw.lc:STDGTI01,TIME)&'CONTINUE  ' && FLAG&0xcfa0000==0 && PATTERN in (:4] && region(0657820101_200-2&'CONTINUE  '000_t50_raw.lc:REG00105,X,Y) && PI in [200:2000] ) || ( CCDNR in [2&'CONTINUE  '] && gti(0657820101_200-2000_t50_raw.lc:STDGTI02,TIME) && FLAG&0xcf&'CONTINUE  'a0000==0 && PATTERN in (:4] && region(0657820101_200-2000_t50_raw.l&'CONTINUE  'c:REG00105,X,Y) && PI in [200:2000] ) || ( CCDNR in [3] && gti(0657&'CONTINUE  '820101_200-2000_t50_raw.lc:STDGTI03,TIME) && FLAG&0xcfa0000==0 && P&'CONTINUE  'ATTERN in (:4] && region(0657820101_200-2000_t50_raw.lc:REG00105,X,&'CONTINUE  'Y) && PI in [200:2000] ) || ( CCDNR in [4] && gti(0657820101_200-20&'CONTINUE  '00_t50_raw.lc:STDGTI04,TIME) && FLAG&0xcfa0000==0 && PATTERN in (:4&'CONTINUE  '] && region(0657820101_200-2000_t50_raw.lc:REG00105,X,Y) && PI in [&'CONTINUE  '200:2000] ) || ( CCDNR in [5] && gti(0657820101_200-2000_t50_raw.lc&'CONTINUE  ':STDGTI05,TIME) && FLAG&0xcfa0000==0 && PATTERN in (:4] && region(0&'CONTINUE  '657820101_200-2000_t50_raw.lc:REG00105,X,Y) && PI in [200:2000] ) |&'CONTINUE  '| ( CCDNR in [6] && gti(0657820101_200-2000_t50_raw.lc:STDGTI06,TIM&'CONTINUE  'E) && FLAG&0xcfa0000==0 && PATTERN in (:4] && region(0657820101_200&'CONTINUE  '-2000_t50_raw.lc:REG00105,X,Y) && PI in [200:2000] ) || ( CCDNR in &'CONTINUE  '[7] && gti(0657820101_200-2000_t50_raw.lc:STDGTI07,TIME) && FLAG&0x&'CONTINUE  'cfa0000==0 && PATTERN in (:4] && region(0657820101_200-2000_t50_raw&'CONTINUE  '.lc:REG00105,X,Y) && PI in [200:2000] ) || ( CCDNR in [8] && gti(06&'CONTINUE  '57820101_200-2000_t50_raw.lc:STDGTI08,TIME) && FLAG&0xcfa0000==0 &&&'CONTINUE  ' PATTERN in (:4] && region(0657820101_200-2000_t50_raw.lc:REG00105,&'CONTINUE  'X,Y) && PI in [200:2000] ) || ( CCDNR in [9] && gti(0657820101_200-&'CONTINUE  '2000_t50_raw.lc:STDGTI09,TIME) && FLAG&0xcfa0000==0 && PATTERN in (&'CONTINUE  ':4] && region(0657820101_200-2000_t50_raw.lc:REG00105,X,Y) && PI in&'CONTINUE  ' [200:2000] ) || ( CCDNR in [10] && gti(0657820101_200-2000_t50_raw&'CONTINUE  '.lc:STDGTI10,TIME) && FLAG&0xcfa0000==0 && PATTERN in (:4] && regio&'CONTINUE  'n(0657820101_200-2000_t50_raw.lc:REG00105,X,Y) && PI in [200:2000] &'CONTINUE  ') || ( CCDNR in [11] && gti(0657820101_200-2000_t50_raw.lc:STDGTI11&'CONTINUE  ',TIME) && FLAG&0xcfa0000==0 && PATTERN in (:4] && region(0657820101&'CONTINUE  '_200-2000_t50_raw.lc:REG00105,X,Y) && PI in [200:2000] ) || ( CCDNR&'CONTINUE  ' in [12] && gti(0657820101_200-2000_t50_raw.lc:STDGTI12,TIME) && FL&'CONTINUE  'AG&0xcfa0000==0 && PATTERN in (:4] && region(0657820101_200-2000_t5&'CONTINUE  '0_raw.lc:REG00105,X,Y) && PI in [200:2000] )' / Filtering expression TIMESYS = 'TT      '           / XMM time will be TT (Terrestial Time)          TIMEUNIT= 's       '           / All times in s unless specified otherwise      TIMEREF = 'LOCAL   '           / Reference location of photon arrival times     TASSIGN = 'SATELLITE'          / Location of time assignment                    CLOCKAPP= 'T       '           / Clock correction applied                       DSTYP1  = 'CCDNR   '           / data subspace descriptor: name                 DSTYP2  = 'FLAG    '           / data subspace descriptor: name                 DSTYP3  = 'PATTERN '           / data subspace descriptor: name                 DSTYP4  = 'POS(X,Y)'           / data subspace descriptor: name                 DSTYP5  = 'PI      '           / data subspace descriptor: name                 DSUNI5  = 'eV      '           / data subspace descriptor: units                DSVAL1  = '1       '           / data subspace descriptor: value                DSFORM2 = 'X       '           / data subspace descriptor: data type            DSVAL2  = 'b00xx00000x0xxxxxxxxxxxxxxxxx' / data subspace descriptor: value     DSVAL3  = ':4      '           / data subspace descriptor: value                DSVAL4  = 'TABLE   '           / data subspace descriptor: value                DSREF4  = ':REG00105'          / data subspace descriptor: reference            DSVAL5  = '200:2000'           / data subspace descriptor: value                2DSVAL1 = '2       '           / data subspace descriptor: value                3DSVAL1 = '3       '           / data subspace descriptor: value                4DSVAL1 = '4       '           / data subspace descriptor: value                5DSVAL1 = '5       '           / data subspace descriptor: value                6DSVAL1 = '6       '           / data subspace descriptor: value                7DSVAL1 = '7       '           / data subspace descriptor: value                8DSVAL1 = '8       '           / data subspace descriptor: value                9DSVAL1 = '9       '           / data subspace descriptor: value                10DSVAL1= '10      '           / data subspace descriptor: value                11DSVAL1= '11      '           / data subspace descriptor: value                12DSVAL1= '12      '           / data subspace descriptor: value                MTYPE1  = 'POS     '           / DM Keyword: Descriptor name                    MFORM1  = 'X,Y     '                                                            TIMEDEL = 5.00000000000000E+01 / Light curve bin size                           BACKAPP =                    T / Background correction applied?                 DEADAPP =                    T / Dead time correction applied?                  VIGNAPP =                    T / Vignetting correction applied?                 BKGRATIO= 5.45008094435076E-01 / Ratio of BKG to SRC collection areas           CHANMIN = 2.00000000000000E+02 / Minimum value of the energy column             CHANMAX = 2.00000000000000E+03 / Maximum value of the energy column             CHANTYPE= 'PI      '           / Name of energy column used                     EXPOSURE= 1.12764435209632E+04 / Weighted live time of CCDs in the extraction reEND                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             A∏L°≈
+ı‹?.a>;⁄W?^˝˛>WvO=¿∑A∏L°˜
+ı‹?çÑ>*-e?aÌ        A∏L¢)
+ı‹?Ö”>/‘À?`/ú=+π∑=+π∑A∏L¢[
+ı‹?ï–>>J∫µ?`ø¡> ˝"=îÒÖA∏L¢ç
+ı‹?î~	>/&Ë?`qT        A∏L¢ø
+ı‹?ïUÊ>0%á?_,Ê        A∏L¢Ò
+ı‹?òÑÑ>:˛ñ?`=+π…=+π…A∏L£#
+ı‹?ñ√>K‡´?_kÆ>Lú=ïMKA∏L£U
+ı‹?d„Ù>.∆Ò?_Ø6=´‚"=sjA∏L£á
+ı‹?™6Ã>OÎŸ?Zè=Ø5ù=w»ñA∏L£π
+ı‹?∞Q›>>3?b •        A∏L£Î
+ı‹?ã•ò>D‰˜?a¶=ˇÛV=ì≈ÍA∏L§
+ı‹?∏ú<>S†â?aØ=™‹=q°÷A∏L§O
+ı‹?µ»>JØ›?_‘ =,ù¬=,ù¬A∏L§Å
+ı‹?∏ﬁ≠>E¢X?[x        A∏L§≥
+ı‹?Ü±±>;ø?^T-=¨ı=tô6A∏L§Â
+ı‹?Åè>6	:?bT~=™≥ß=qh§A∏L•
+ı‹?aÜ">A??^©5>,˚é=¨˚éA∏L•I
+ı‹?ÖüI><N~?ZµÒ=Øû€=x]lA∏L•{
+ı‹?P≤u>(I´?`Ç∂=´(ø=r=A∏L•≠
+ı‹?1√b>w÷?^©ƒ=≠ìh=uy'A∏L•ﬂ
+ı‹?Çü~>8X?_ç.=≠{º=uW≠A∏L¶
+ı‹?‚≈>ß	?aü˜=+?=+?A∏L¶C
+ı‹?( ê>(I?[¯1>ÄÍ=ñ±JA∏L¶u
+ı‹?Y^>!ÙŸ?]XC=-Ú/=-Ú/A∏L¶ß
+ı‹?P±`>(z…?`]~=¨^Z=sƒA∏L¶Ÿ
+ı‹?ãÏm>4 Ï?_É=,ñ=,ñA∏Lß
+ı‹?'¶9>{È?Yì0=0¡=0¡A∏Lß=
+ı‹?[YÄ>x˚?`õr        A∏Lßo
+ı‹?:◊>`?b#’=*“º=*“ºA∏Lß°
+ı‹?6N≤>–˚?aH=´|¡=rÖA∏Lß”
+ı‹?<ÈR>Q„?^q√        A∏L®
+ı‹?FE>>q?bè°        A∏L®7
+ı‹>„i>ñœ?_Ex>h]=ïmWA∏L®i
+ı‹?6>?`&q=+”ï=+”ïA∏L®õ
+ı‹?Ì1>2≠?` º>W¡•=¿˙yA∏L®Õ
+ı‹?@{ã>ë≈?aÿr        A∏L®ˇ
+ı‹?j™â>32=?Z,?=∞G=yK^A∏L©1
+ı‹?HÁ1>/`?bªÚ>  b=î∂ÎA∏L©c
+ı‹?R∞>*Dé?\ñH>.O=ÆOA∏L©ï
+ı‹?ç3ª>3Ñî?bôœ=*k=*kA∏L©«
+ı‹?]7°>+ˇÔ?`‘Æ=´|Á=rÖ@A∏L©˘
+ı‹?i9>;¶?\ßT>OR=ñxA∏L™+
+ı‹?)ﬁD>!V?_;b=+˚è=+˚èA∏L™]
+ı‹?g\>=]?ay_        A∏L™è
+ı‹?]4ﬂ>"BØ?_Ã[=,Å=,ÅA∏L™¡
+ı‹?|¢>4ÕÉ?aêÿ=™Õ=qåéA∏L™Û
+ı‹?Eõ(>/Hc?_•‚> Ù'=îÁ&A∏L´%
+ı‹?iÍ∫>/‰˝?`€4=¨¬ä=tQ≈A∏L´W
+ı‹?g¯à>$‡?aÿ	=+z=+zA∏L´â
+ı‹?§Ã¿>Ië^?aìÎ=´ù=r≤™A∏L´ª
+ı‹?04Ñ>?`≠q=´Ω=r‡A∏L´Ì
+ı‹?î∑>8|?`Í~=*¸Å=*¸ÅA∏L¨
+ı‹?à>2>:ùà?aæ=´In=r<vA∏L¨Q
+ı‹?cd5>0óK?Zﬂ‹=ÆÊ=wgiA∏L¨É
+ı‹?¥T>@«Ö?`ˇ        A∏L¨µ
+ı‹?]»Ñ>,L?`6ÿ=¨J˚=s®±A∏L¨Á
+ı‹?è‰E>?Ãq?_%ª=≠ë=t A∏L≠
+ı‹?é◊3>>ut?`ø∫=¨Cm=sûA∏L≠K
+ı‹?zÀª>*c˚?bI=*À=*ÀA∏L≠}
+ı‹?≤U2>H¿?`”=+◊ó=+◊óA∏L≠Ø
+ı‹?ßfÛ>9∑M?a«        A∏L≠·
+ı‹?RR&>)è≈?^Õ€=¨E#=s†mA∏LÆ
+ı‹?äéÌ>;Ew?bw¿=™á=qæªA∏LÆE
+ı‹?ö8⁄>:Ò??bCh=*U9=*U9A∏LÆw
+ı‹?C≥°>$@*?`ìJ=´Yî=rSLA∏LÆ©
+ı‹?ß˘®>Bıª?`˘N=+µx=+µxA∏LÆ€
+ı‹?¶F˜>K=é?_ß¡=¨!a=sm€A∏LØ
+ı‹?ü√+>6ïË?^7        A∏LØ?
+ı‹?à§>B’?b.◊> M⁄=î' A∏LØq
+ı‹?•÷Ú>BÜ?_Äe=,⁄=,⁄A∏LØ£
+ı‹?ÜÈ√>2Bº?]ë=-o∑=-o∑A∏LØ’
+ı‹?LA>1çé?_L>¡4=ï”ÏA∏L∞
+ı‹?´L*>Lﬁ'?aÄŸ=´e!=rc¢A∏L∞9
+ı‹?¿ÿ8>V⁄?bîß=™Ïù=qπ3A∏L∞k
+ı‹?°ä˙>6√—?`@.        A∏L∞ù
+ı‹?ø%.>X‹Ô?](]=≠)Ü=t„jA∏L∞œ
+ı‹?ÇÑ>.<?_¡‡=+£∞=+£∞A∏L±
+ı‹?ó∫P>1ﬂ?`nâ        A∏L±3
+ı‹?jéÅ>&ß?_eÁ=,†¨=,†¨A∏L±e
+ı‹?íÚ√>8ÇE?^Øg=, U=, UA∏L±ó
+ı‹?[Ó0>*˛s?b&y=™u =q	A∏L±…
+ı‹?OZ>kF?_Ó˙        A∏L±˚
+ı‹?óãœ>\C~?_ø≥>Wõ
+=¿◊ÚA∏L≤-
+ı‹?lË>4„´?X¸=±÷Ó={ÄÕA∏L≤_
+ı‹?é|’>F≥?b6¶=ˇÜ\=ìá A∏L≤ë
+ı‹?à°	>24n?_ïâ=,PÜ=,PÜA∏L≤√
+ı‹?ñJ><¢(?Y«<=/Ωj=/ΩjA∏L≤ı
+ı‹?ÜZ•>1ï7?]˙ü=-át=-átA∏L≥'
+ı‹?ƒ…->[]?^%¨=¨‡π=t|uA∏L≥Y
+ı‹?Ks>9Ÿ…?`ÍŒ>+9ı=´9ıA∏L≥ã
+ı‹?^î>/õ¶?Yû€=∞#=x˙ÃA∏L≥Ω
+ı‹?fü˚>ø¸?b1=        A∏L≥Ô
+ı‹?{>-˙?\L3=.v}=.v}A∏L¥!
+ı‹?âN„>DΩj?`f>Õg=ï‚A∏L¥S
+ı‹?ëf>-eÂ?`<4        A∏L¥Ö
+ı‹?ì”>0Jz?\é6        A∏L¥∑
+ı‹?lDK>1k‹?^ û=¨Ìx=té{A∏L¥È
+ı‹?N´>ÅR?b ÿ=+≈˜=+≈˜A∏Lµ
+ı‹?x7Í>=8?`ΩU> \˛=î8õA∏LµM
+ı‹?%ä˜>∆H?]µ=≠ß„=uñA∏Lµ
+ı‹?pW>(0}?`	<=,d∞=,d∞A∏Lµ±
+ı‹?k >&c?^ˇ9=,ò<=,ò<A∏Lµ„
+ı‹?LÈΩ>D{?\r1=-ß5=-ß5A∏L∂
+ı‹?\2I>!Ü?`“^=+Ih=+IhA∏L∂G
+ı‹?eÕ∂>%‘`?]æM=-kŸ=-kŸA∏L∂y
+ı‹?`ÖJ>ÕΩ?a„[        A∏L∂´
+ı‹?åfõ>+Ií?]ÂÅ        A∏L∂›
+ı‹?Üw>/lX?c'\=*"=*"A∏L∑
+ı‹?-ÿÅ>;êQ?_rÎ>W∏=¿ÒËA∏L∑A
+ı‹?é†„>>∑?a/^=™Í=qµÑA∏L∑s
+ı‹?oƒN>´q?_úê        A∏L∑•
+ı‹?ú∞=>=ÈŒ?^∂ß=,…Á=,…ÁA∏L∑◊
+ı‹?z2>>wî?_N>4õ=ï1ìA∏L∏	
+ı‹?Ñà¶>CÄ?]_>d=ñè˜A∏L∏;
+ı‹?ûn(>F2ü?añ=™©+=qY—A∏L∏m
+ı‹?ï∞,>9ÆO?_uÓ=+Û–=+Û–A∏L∏ü
+ı‹?àC>1gE?`ô<=+¢C=+¢CA∏L∏—
+ı‹?π›,>M<"?^‘b=,„=,„A∏Lπ
+ı‹?æs>FZ˛?`s∑        A∏Lπ5
+ı‹?{∆->-£«?[ïî=0{†=0{†A∏Lπg
+ı‹?Éÿ>RÜL?`0w>WJê=¿è˜A∏Lπô
+ı‹?êÀ;>@’|?]›T=¨¸ó=t£ﬁA∏LπÀ
+ı‹?úÎa><˙?b˚ç=)˙I=)˙IA∏Lπ˝
+ı‹?≠¥”>WkÑ?_ı>v≤=ï}‰A∏L∫/
+ı‹?∞y]>RÒ⁄?ZÙ1=Ø±O=xwÖA∏L∫a
+ı‹?q=î>(—˙?_3=-ï=-ïA∏L∫ì
+ı‹?çx>>áZ?^Öt=≠=tØÂA∏L∫≈
+ı‹?ñ0>K8‘?`2ô>B8=ïALA∏L∫˜
+ı‹?é‡–>II¶?\¶A>Xr=ñÇèA∏Lª)
+ı‹?ÏÅ>]r?_¢	        A∏Lª[
+ı‹?èP>Ró?\ª<>.OF=ÆOFA∏Lªç
+ı‹?]Ωç>,W?`Yé=´xd=r~ﬂA∏Lªø
+ı‹?¢>P/J?a∆o=ˇÄ=ìƒGA∏LªÒ
+ı‹?Å›8>-ˇX?`S=+Ωﬁ=+ΩﬁA∏Lº#
+ı‹?™¸˜>Vå/?^eº>Ã=ñÇA∏LºU
+ı‹?Æo>HOp?\’œ=-˛z=-˛zA∏Lºá
+ı‹?ôﬂ0>P(?Z‹S>=∂=ò≤ÊA∏Lºπ
+ı‹?⁄ﬂ“>_WA?[
+”=/=/A∏LºÎ
+ı‹?y3â>Fiã?`å8>,y—=¨y—A∏LΩ
+ı‹?æ
+Í>W≠ˆ?^g=¨¥Ã=t>VA∏LΩO
+ı‹?ä[´>:¯À?b–Æ=™}/=qùA∏LΩÅ
+ı‹?•£>Aèâ?`ù¡=,z=,zA∏LΩ≥
+ı‹?™/>M±í?^«=¨–˜=tf,A∏LΩÂ
+ı‹?º§6>F(ü?^√A        A∏Læ
+ı‹?¿r˙>Rs%?[ù=.«G=.«GA∏LæI
+ı‹?Yí>>A?`>,‚=¨‚A∏Læ{
+ı‹?ºùD>]z?`πæ> =I=î˛A∏Læ≠
+ı‹?°ô;>GÀó?a¶æ=™è=q5ÇA∏Læﬂ
+ı‹?ãië>D®v?a˜> Z=ìÎ®A∏Lø
+ı‹?Æb∞>_∆-?^ﬁt>-=≠A∏LøC
+ı‹?§O>ZHè?_µM>+∏=´∏A∏Løu
+ı‹?1at>1ı;?a√∞>+1=´1A∏Løß
+ı‹?`>B_Q?KÀ=>˘?=¢»FA∏LøŸ
+ı‹?©cÑ>üÛ	>Ω\∂=ŒΩZ=ŒΩZA∏L¿
+ı‹?£ª>\û*?[…u>.ﬂ˘=Æﬂ˘A∏L¿=
+ı‹?1öÇ>~m?]ß=-hg=-hgA∏L¿o
+ı‹?¡PE>ci?[1^>ˆ4=ò`TA∏L¿°
+ı‹?…kœ>TãÁ?_ü?=+ƒW=+ƒWA∏L¿”
+ı‹?ûL2>?€d?\t=.wy=.wyA∏L¡
+ı‹?¶≈u>S’+?_û˜>ûˇ=ï¨lA∏L¡7
+ı‹?àÄK>Kpõ?bAf>*ÎÚ=™ÎÚA∏L¡i
+ı‹?§J‹>K?]˘=≠"ù=tŸ£A∏L¡õ
+ı‹?Å∏‘>R¶b?^SΩ>X÷≈=¡ÚXA∏L¡Õ
+ı‹?ê`(>.†?\ŒI        A∏L¡ˇ
+ı‹?©ÌÅ>G:™?Z-;=/ ‘=/ ‘A∏L¬1
+ı‹?Æ∂>P&®?]Ï±=≠”π=u‘A∏L¬c
+ı‹?±F·>Ië™?]Zœ=.;U=.;UA∏L¬ï
+ı‹?¥¨¸>SjÂ?]·A=≠g¿=u;kA∏L¬«
+ı‹?£ŸÈ>Z$s?_;>,B(=¨B(A∏L¬˘
+ı‹?Éc≠>Aœ»?_L’>C5=ïBoA∏L√+
+ı‹?Ä&>HkÊ?`	>,PA=¨PAA∏L√]
+ı‹?àV>C:ø?a¥®> u‡=îUWA∏L√è
+ı‹?ã¯≤>4D%?_bö=-.Ö=-.ÖA∏L√¡
+ı‹?∫˚ﬁ>V\„?^%R=≠,À=tË
+A∏L√Û
+ı‹?k›≥>JI?b!÷>U%%=æ§åA∏Lƒ%
+ı‹?ïf>9≥?`C;=,J==,J=A∏LƒW
+ı‹?µíI>Tc?\‘ô=≠•=uí(A∏Lƒâ
+ı‹?óÕ]>:#ﬂ?aï=+>Å=+>ÅA∏Lƒª
+ı‹?•˘µ>J‰õ?`É=´˚=s7≠A∏LƒÌ
+ı‹?å-´>+?^?£        A∏L≈
+ı‹?¬7F>R{Î?\∏=.$Å=.$ÅA∏L≈Q
+ı‹?w¸S>4%Ï?`=´K=r>±A∏L≈É
+ı‹?£iâ>RL?_œà>[ç=ï^åA∏L≈µ
+ı‹?ñÊÏ>9
+≥?boj=*Nf=*NfA∏L≈Á
+ı‹?œHj>`Äï?]Y∞=≠¸Ã=v3A∏L∆
+ı‹?çîb>,πº?\â        A∏L∆K
+ı‹?’ÇJ>[Øø?]"g=-ÌÑ=-ÌÑA∏L∆}
+ı‹?§cM>@»≈?a|=*Õr=*ÕrA∏L∆Ø
+ı‹?ûa>?•?\∏ñ=.ıV=.ıVA∏L∆·
+ı‹?ÇíK>.Ê?^Ê¡=,Ù=,ÙA∏L«
+ı‹?Ç¯ï>%™¨?]FÓ        A∏L«E
+ı‹?¿fç>N¨ˆ?båË=*4N=*4NA∏L«w
+ı‹?¢Í>PEí?aØ+> 2=ì€PA∏L«©
+ı‹?ù®Õ>Gå ?^"a=¨€Ë=tu•A∏L«€
+ı‹?ÅÆ3>Ràñ?^nK>Xñß=¡∏˛A∏L»
+ı‹?•\∫>9>#?_s‚        A∏L»?
+ı‹?†Ak>@#…?^;=.7=.7A∏L»q
+ı‹?†◊3>>æ˘?aÍ´=+õ`=+õ`A∏L»£
+ı‹?¶ÈÔ>KıÖ?^÷ï=¨V`=s∏ŒA∏L»’
+ı‹?Çv‡>.ﬂ?_ ﬁ=-yˆ=-yˆA∏L…
+ı‹?æ}ƒ>PYc?]==-¢$=-¢$A∏L…9
+ı‹?°Ú>G7 ?bZQ=™ß=qV’A∏L…k
+ı‹?ä.õ>E•±?^÷¡>c:=ïgiA∏L…ù
+ı‹?á…>:õ?a«ñ=´>H=r,≤A∏L…œ
+ı‹?ñêÒ>Cdè?^ıª=¨aì=s»§A∏L 
+ı‹?Ç◊>@˙m?`@›> £È=îäA∏L 3
+ı‹?ë%©>8Å–?\uq=.8=.8A∏L e
+ı‹?MÅ.>Cœ·?`W>W•=¿‡ÎA∏L ó
+ı‹?áûı>'j?`_˜        A∏L …
+ı‹?ü˜ >P-…?`û>7=ï4ÈA∏L ˚
+ı‹?ØÑ;>WE{?`Áò> üü=îÖãA∏LÀ-
+ı‹?Åw[>#√f?_ŸV        A∏LÀ_
+ı‹?≠3ª>O˜?_=¨âZ=t ÂA∏LÀë
+ı‹?K6>9?o?a≠1>*–Ö=™–ÖA∏LÀ√
+ı‹?8e>¯G?]\`=-uÖ=-uÖA∏LÀı
+ı‹?}9~>,+?`E=,/•=,/•A∏LÃ'
+ı‹?ûêï>H∏Ê?\Ÿé=ÆÎ=v#ïA∏LÃY
+ı‹?©óK><$Ò?^',        A∏LÃã
+ı‹?Kƒá>'èî?^“b=¨ÑÒ=s˙©A∏LÃΩ
+ı‹?õ¸B>=¥?_∏;=+ı∏=+ı∏A∏LÃÔ
+ı‹?Ñßø>/Us?`”=+I?=+I?A∏LÕ!
+ı‹?Ä{>?«?_ós> œ≤=îΩA∏LÕS
+ı‹?Öœ’>9Íƒ?_¿ =¨?î=sòêA∏LÕÖ
+ı‹?oÉ>'ñ¯?`”J=+ãG=+ãGA∏LÕ∑
+ı‹?Ä¿È>,ì?a¯r=+ ¢=+ ¢A∏LÕÈ
+ı‹?Üú˙>1Ì%?]ç=-‡É=-‡ÉA∏LŒ
+ı‹?ÖR
+>9%O?`£c=´=q÷A∏LŒM
+ı‹?âlG>D∑◊?_˜/>=ë=ï;ÎA∏LŒ
+ı‹?≥C8>K¬s?ZÎ=/*=/*A∏LŒ±
+ı‹?à	0>1e—?`îÏ=+ò=+òA∏LŒ„
+ı‹?ègL>6I`?_$T=,XO=,XOA∏Lœ
+ı‹?ô7ò>2 À?^@
+        A∏LœG
+ı‹?©O»>:œ?bÃ{        A∏Lœy
+ı‹?íõ>JÓê?\ºÏ>p◊=ñûªA∏Lœ´
+ı‹?b R>6$K?bºó=ˇ©=ì:ˆA∏Lœ›
+ı‹?≥´>G™π?c98=*Lç=*LçA∏L–
+ı‹?o„≤>'◊Ï?`zß=+Æ¥=+Æ¥A∏L–A
+ı‹?îlç>8Hù?a@í=,Á?=,Á?A∏L–s
+ı‹?•Fv>9%2?_ë¸        A∏L–•
+ı‹?}<	>,Ú?`ï=,L=,LA∏L–◊
+ı‹?äç>;q?bîÁ=©ﬁ¢=p;bA∏L—	
+ı‹?≈'A>IÒu?`+        A∏L—;
+ı‹?âiI>L})?`ˆ>*ÏX=™ÏXA∏L—m
+ı‹?yfπ>>?_ûq>?L=ï=ÎA∏L—ü
+ı‹?°¨Ú>?•q?`Œ\=+.œ=+.œA∏L——
+ı‹?±®>GU‰?aµÄ=*Æﬁ=*ÆﬁA∏L“
+ı‹?Äß:>@Û?^U¥>3=ñWÊA∏L“5
+ı‹?r9 >2ÓÏ?_H=¨™=t/A∏L“g
+ı‹?ÉÈU>7j?b·~=™¿7=qzhA∏L“ô
+ı‹?†˛Y>@ÊÏ?]It=->Ã=->ÃA∏L“À
+ı‹?´áœ>Mö?a;s=´-ª=rIA∏L“˝
+ı‹?Ñz>Kæ»?^Bô>-™z=≠™zA∏L”/
+ı‹?bòÔ>-Uj?a∏=¨%=ssA∏L”a
+ı‹?§‘˝>C]i?\É÷=.0ü=.0üA∏L”ì
+ı‹?â?¡>D`†?`OÄ> ø3=î™A∏L”≈
+ı‹?úŸD>V/J?`»¢>+#?=´#?A∏L”˜
+ı‹?≥˛Ä>J†±?^-=-é=-éA∏L‘)
+ı‹?åe◊>Fã?`\¸>¿=ïiA∏L‘[
+ı‹?ôÿ>1§Ω?bÍ        A∏L‘ç
+ı‹?ì9T>cå&?]Ò={2={2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional binary table                     NAXIS1  =                   16 / width of table in bytes                        NAXIS2  =                    1 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group (required keyword)              TFIELDS =                    2 / number of fields in each row                   TTYPE1  = 'START   '           / lower GTI boundary                             TFORM1  = 'D       '           / data format of field: 8-byte DOUBLE            TUNIT1  = 's       '           / physical unit of field                         TTYPE2  = 'STOP    '           / upper GTI boundary                             TFORM2  = 'D       '           / data format of field: 8-byte DOUBLE            TUNIT2  = 's       '           / physical unit of field                         EXTNAME = 'SRC_GTIS'           / The name of this table                         HDUCLASS= 'OGIP    '           / format conforms to OGIP standard               HDUCLAS1= 'GTI     '           / table contains Good Time Intervals             HDUCLAS2= 'STANDARD'           / standard Good Time Interval table              ONTIME  = 1.30500000000000E+04 / [s] sum of all Good Time Intervals             TSTART  = 4.07675308042814E+08 / [s] Lower bound of first GTI                   TSTOP   = 4.07688358042814E+08 / [s] Uppler bound of last GTI                   TIMEUNIT= 's       '           / All times in s unless specified otherwise      TIMESYS = 'TT      '           / XMM time will be TT (Terrestial Time)          MJDREF  = 5.08140000000000E+04 / 1998-01-01T00:00:00 (TT) expressed in MJD      TIMEREF = 'LOCAL   '           / Reference location of photon arrival times     TASSIGN = 'SATELLITE'          / Location of time assignment                    TIMEZERO=                    0 / Clock correction (if not zero)                 CLOCKAPP=                    T / Clock correction applied?                      END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             A∏L°¨
+ı‹A∏L‘¶
+ı‹                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional binary table                     NAXIS1  =                   16 / width of table in bytes                        NAXIS2  =                    1 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group (required keyword)              TFIELDS =                    2 / number of fields in each row                   TTYPE1  = 'START   '           / lower GTI boundary                             TFORM1  = 'D       '           / data format of field: 8-byte DOUBLE            TUNIT1  = 's       '           / physical unit of field                         TTYPE2  = 'STOP    '           / upper GTI boundary                             TFORM2  = 'D       '           / data format of field: 8-byte DOUBLE            TUNIT2  = 's       '           / physical unit of field                         EXTNAME = 'BKG_GTIS'           / The name of this table                         HDUCLASS= 'OGIP    '           / format conforms to OGIP standard               HDUCLAS1= 'GTI     '           / table contains Good Time Intervals             HDUCLAS2= 'STANDARD'           / standard Good Time Interval table              ONTIME  = 1.30500000000000E+04 / [s] sum of all Good Time Intervals             TSTART  = 4.07675308042814E+08 / [s] Lower bound of first GTI                   TSTOP   = 4.07688358042814E+08 / [s] Uppler bound of last GTI                   TIMEUNIT= 's       '           / All times in s unless specified otherwise      TIMESYS = 'TT      '           / XMM time will be TT (Terrestial Time)          MJDREF  = 5.08140000000000E+04 / 1998-01-01T00:00:00 (TT) expressed in MJD      TIMEREF = 'LOCAL   '           / Reference location of photon arrival times     TASSIGN = 'SATELLITE'          / Location of time assignment                    TIMEZERO=                    0 / Clock correction (if not zero)                 CLOCKAPP=                    T / Clock correction applied?                      END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             A∏L°¨
+ı‹A∏L‘¶
+ı‹                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional binary table                     NAXIS1  =                   29 / width of table in bytes                        NAXIS2  =                    1 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group (required keyword)              TFIELDS =                    5 / number of fields in each row                   TTYPE1  = 'SHAPE   '           / shape of element                               TFORM1  = '16A     '           / data format of field: ASCII Character          TTYPE2  = 'X       '           / x-coordinate vector                            TFORM2  = 'E       '           / data format of field: 4-byte REAL              TTYPE3  = 'Y       '           / y-coordinate vector                            TFORM3  = 'E       '           / data format of field: 4-byte REAL              TTYPE4  = 'R       '           / radius vector                                  TFORM4  = 'E       '           / data format of field: 4-byte REAL              TTYPE5  = 'COMPONENT'          / component number that shape belongs to         TFORM5  = 'B       '           / data format of field: BYTE                     EXTNAME = 'REG00105'           / The name of this table                         HDUCLASS= 'ASC     '                                                            HDUCLAS1= 'REGION  '                                                            HDUCLAS2= 'STANDARD'                                                            MTYPE1  = 'pos     '                                                            MFORM1  = 'X,Y     '                                                            END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             CIRCLE          F⁄ÄqFÕÂODz                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

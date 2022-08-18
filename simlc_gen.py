@@ -11,13 +11,44 @@ sys.path.append('/Users/do19150/Gits/Analysis_Funcs/LC_Sim')
 sys.path.append('/home/do19150/Gits/Analysis_Funcs/LC_Sim')
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
 #import pdb
 
 from scipy.stats import exponnorm
 from DoneLC import Done_LC
-from CurveFit import NGaussFixT
+
+def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
+    
+    '''
+    Function to create a repeating Gaussian curve, with the peak of
+    the first Gaussian at a specific point, and recurring with a
+    certain time.
+    
+    Parameters:
+    no - number of gaussians in the specified curve
+    constant - base level for the curve(s) above zero
+    amplitude - height of the gaussian curve above the base constant level
+    width - FWHM of the gaussian curve
+    position - location of the first peak of the curve
+    recurrence - distance between peaks of Gaussians
+    '''
+    
+    no = int(no)
+    
+    #create a peak waveform for the correct number of gaussians
+    peak_times = np.arange(position,position+no*recurrence,recurrence)
+    w = ((0.5*width)**2)/(np.log(2))
+    combined_gaussians = np.zeros(np.shape(domain))
+    for i in range(no):
+        combined_gaussians += np.abs(amplitude)*np.exp(-((domain-peak_times[i])**2)/w)
+    
+    #add the constant to shift in range
+    rng = combined_gaussians
+    
+    return rng
+
+
 
 #set the total number of LCs to create
 N_lcs = int(input('How many lightcurves are to be simulated: '))
@@ -30,7 +61,6 @@ Period = float(input('Enter length of lightcurves: '))
 tbin = float(input('Enter length of lightcurve time bins: '))
 t = np.arange(0,Period,tbin)
 
-#pdb.set_trace()
 #create empty array for generated lightcurves
 wo_qpe_arr = np.empty((int((N_lcs/2)+1),len(t)))
 qpe_arr = np.empty((int((N_lcs/2)+1),len(t)))
@@ -53,8 +83,6 @@ slopes = np.abs(np.random.normal(slope_mean,slope_std,N_lcs))
 #generate simulated lightcurves for the lcs without qpes
 for i in range(int(N_lcs/2)):
     lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
-    plt.plot(t,lc[1])
-    plt.show()
     wo_qpe_arr[i+1,:] = lc[1]
     
 #save the lcs for the sample without qpes
@@ -63,13 +91,11 @@ np.savetxt('LCGen/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
 #generate simulated lightcurves for the lcs with qpes
 for i in range(int(N_lcs/2)):
     lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
-    plt.plot(t,lc[1])
-    plt.show()
     qpe_arr[i+1,:] = lc[1]
 
 #import the eruption characteristics file
 eruption_chars = pd.read_csv('Obs/eruption_profiles.csv',index_col=0)
-duty_cycles = [,0.41,0.19]
+dc_vals = pd.read_csv('Obs/eruption_dcs.csv',index_col=0)
 
 #for qpe sample create distributions for amplitude, duration, and duty cycle
 #all variables are to be fit to exponentially modified gaussian distributions
@@ -77,9 +103,9 @@ duty_cycles = [,0.41,0.19]
 amp_dist = exponnorm.fit(eruption_chars['Amplitude'].values)
 amplitudes = np.abs(exponnorm.rvs(amp_dist[0],loc=amp_dist[1],scale=amp_dist[2],size=int(N_lcs/2)))
 dur_dist = exponnorm.fit(eruption_chars['Duration'].values)
-durations = np.abs(exponnorm.rvs(amp_dist[0],loc=amp_dist[1],scale=amp_dist[2],size=int(N_lcs/2)))
-dc_dist = exponnorm.fit(eruption_chars['Amplitude'].values)
-duty_cycles = np.abs(exponnorm.rvs(amp_dist[0],loc=amp_dist[1],scale=amp_dist[2],size=int(N_lcs/2)))
+durations = np.abs(exponnorm.rvs(dur_dist[0],loc=dur_dist[1],scale=dur_dist[2],size=int(N_lcs/2)))
+dc_dist = exponnorm.fit(dc_vals['DC'].values)
+duty_cycles = np.abs(exponnorm.rvs(dc_dist[0],loc=dc_dist[1],scale=dc_dist[2],size=int(N_lcs/2)))
 
 #determine the recurrence times 
 trec = durations/duty_cycles
@@ -91,14 +117,25 @@ for i in range(int(N_lcs/2)):
     first_peak = np.random.uniform(low=-rec/2,high=rec/2)
     #determine the no of peaks such that either the start or end could be affected
     #by a peak starting or ending
-    no_peaks = int((Period // rec) + 1)
+    no_peaks = int((Period // rec) + 2)
     
     #for each qpe curve create the underlying gaussian eruptions
-    peak_profile = NGaussFixT(t, no = no_peaks, amplitude = amplitudes[i], width = durations[i],
-                             position = first_peak, recurrence = trec[i])
+    peak_profile = 1 + NGaussFixT(qpe_arr[0], no = no_peaks, amplitude = amplitudes[i], 
+                             width = durations[i], position = first_peak, recurrence = trec[i])
+    
+    #print(amplitudes[i],durations[i],first_peak,trec[i])
 
-#convolve the eruptions with the power law lcs
+    # fix,ax1 = plt.subplots()
+    # ax2 = ax1.twinx()
+    # ax1.plot(qpe_arr[0],qpe_arr[i+1],color='b')
+    # ax2.plot(qpe_arr[0],peak_profile,color='r')
+    # plt.show()
 
+    #convolve the eruptions with the power law lcs
+    qpe_arr[i+1] *= peak_profile
+    
+    # plt.plot(qpe_arr[0],qpe_arr[i+1],color='k')
+    # plt.show()
 
 #save the lcs for the sample with qpes
 np.savetxt('LCGen/qpe_sample.csv',qpe_arr,delimiter=',')

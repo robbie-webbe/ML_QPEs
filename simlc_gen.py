@@ -9,6 +9,7 @@ Created on Wed Aug 17 14:20:28 2022
 import sys
 sys.path.append('/Users/do19150/Gits/Analysis_Funcs/LC_Sim')
 sys.path.append('/home/do19150/Gits/Analysis_Funcs/LC_Sim')
+from tqdm import tqdm
 
 import numpy as np
 #import matplotlib.pyplot as plt
@@ -81,7 +82,8 @@ slope_std = float(input('Standard deviation for power law slopes to be drawn: ')
 slopes = np.abs(np.random.normal(slope_mean,slope_std,N_lcs))
 
 #generate simulated lightcurves for the lcs without qpes
-for i in range(int(N_lcs/2)):
+print('Without QPEs')
+for i in tqdm(range(int(N_lcs/2))):
     lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
     wo_qpe_arr[i+1,:] = lc[1]
     
@@ -89,7 +91,8 @@ for i in range(int(N_lcs/2)):
 np.savetxt('LCGen/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
 
 #generate simulated lightcurves for the lcs with qpes
-for i in range(int(N_lcs/2)):
+print('Pre QPEs')
+for i in tqdm(range(int(N_lcs/2))):
     lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
     qpe_arr[i+1,:] = lc[1]
 
@@ -110,7 +113,8 @@ duty_cycles = np.abs(exponnorm.rvs(dc_dist[0],loc=dc_dist[1],scale=dc_dist[2],si
 #determine the recurrence times 
 trec = durations/duty_cycles
 
-for i in range(int(N_lcs/2)):
+print("Adding in QPE features.")
+for i in tqdm(range(int(N_lcs/2))):
     #for each curve determine the peak locations
     rec = trec[i]
     #set the first peak anywhere within a range of size trec centred at 0

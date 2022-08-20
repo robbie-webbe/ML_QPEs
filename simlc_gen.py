@@ -12,11 +12,11 @@ sys.path.append('/home/do19150/Gits/Analysis_Funcs/LC_Sim')
 from tqdm import tqdm
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
 #import pdb
 
-from scipy.stats import lognorm, exponnorm
+from scipy.stats import exponnorm
 from DoneLC import Done_LC
 
 def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
@@ -134,17 +134,17 @@ for i in tqdm(range(int(N_lcs/2))):
     
     print(amplitudes[i],durations[i],first_peak,trec[i])
 
-    fix,ax1 = plt.subplots()
-    ax2 = ax1.twinx()
-    ax1.plot(qpe_arr[0],qpe_arr[i+1],color='b')
-    ax2.plot(qpe_arr[0],peak_profile,color='r')
-    plt.show()
+#    fix,ax1 = plt.subplots()
+#    ax2 = ax1.twinx()
+#    ax1.plot(qpe_arr[0],qpe_arr[i+1],color='b')
+#    ax2.plot(qpe_arr[0],peak_profile,color='r')
+#    plt.show()
 
     #convolve the eruptions with the power law lcs
     qpe_arr[i+1] *= peak_profile
     
-    plt.plot(qpe_arr[0],qpe_arr[i+1],color='k')
-    plt.show()
+#    plt.plot(qpe_arr[0],qpe_arr[i+1],color='k')
+#    plt.show()
 
 #save the lcs for the sample with qpes
 np.savetxt('LCGen/qpe_sample.csv',qpe_arr,delimiter=',')

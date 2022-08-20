@@ -12,11 +12,11 @@ sys.path.append('/home/do19150/Gits/Analysis_Funcs/LC_Sim')
 from tqdm import tqdm
 
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 #import pdb
 
-from scipy.stats import exponnorm
+from scipy.stats import lognorm, exponnorm
 from DoneLC import Done_LC
 
 def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
@@ -100,15 +100,20 @@ for i in tqdm(range(int(N_lcs/2))):
 eruption_chars = pd.read_csv('Obs/eruption_profiles.csv',index_col=0)
 dc_vals = pd.read_csv('Obs/eruption_dcs.csv',index_col=0)
 
+amp_vals = list(eruption_chars['Amplitude'].values)
+dur_vals = list(eruption_chars['Duration'].values)
+
 #for qpe sample create distributions for amplitude, duration, and duty cycle
 #all variables are to be fit to exponentially modified gaussian distributions
-#in order to provide the tail including eRO-QPE1
-amp_dist = exponnorm.fit(eruption_chars['Amplitude'].values)
+#in order to provide the tail. Remove eRO-QPE1 for the fitting.
+del amp_vals[-2]
+del dur_vals[-2]
+amp_dist = exponnorm.fit(amp_vals)
 amplitudes = np.abs(exponnorm.rvs(amp_dist[0],loc=amp_dist[1],scale=amp_dist[2],size=int(N_lcs/2)))
-dur_dist = exponnorm.fit(eruption_chars['Duration'].values)
+dur_dist = exponnorm.fit(dur_vals)
 durations = np.abs(exponnorm.rvs(dur_dist[0],loc=dur_dist[1],scale=dur_dist[2],size=int(N_lcs/2)))
-dc_dist = exponnorm.fit(dc_vals['DC'].values)
-duty_cycles = np.abs(exponnorm.rvs(dc_dist[0],loc=dc_dist[1],scale=dc_dist[2],size=int(N_lcs/2)))
+dc_dist = exponnorm.fit(dc_vals['DC'].values,floc=0)
+duty_cycles = exponnorm.rvs(dc_dist[0],loc=dc_dist[1],scale=dc_dist[2],size=int(N_lcs/2))
 
 #determine the recurrence times 
 trec = durations/duty_cycles
@@ -127,19 +132,19 @@ for i in tqdm(range(int(N_lcs/2))):
     peak_profile = 1 + NGaussFixT(qpe_arr[0], no = no_peaks, amplitude = amplitudes[i], 
                              width = durations[i], position = first_peak, recurrence = trec[i])
     
-    #print(amplitudes[i],durations[i],first_peak,trec[i])
+    print(amplitudes[i],durations[i],first_peak,trec[i])
 
-    # fix,ax1 = plt.subplots()
-    # ax2 = ax1.twinx()
-    # ax1.plot(qpe_arr[0],qpe_arr[i+1],color='b')
-    # ax2.plot(qpe_arr[0],peak_profile,color='r')
-    # plt.show()
+    fix,ax1 = plt.subplots()
+    ax2 = ax1.twinx()
+    ax1.plot(qpe_arr[0],qpe_arr[i+1],color='b')
+    ax2.plot(qpe_arr[0],peak_profile,color='r')
+    plt.show()
 
     #convolve the eruptions with the power law lcs
     qpe_arr[i+1] *= peak_profile
     
-    # plt.plot(qpe_arr[0],qpe_arr[i+1],color='k')
-    # plt.show()
+    plt.plot(qpe_arr[0],qpe_arr[i+1],color='k')
+    plt.show()
 
 #save the lcs for the sample with qpes
 np.savetxt('LCGen/qpe_sample.csv',qpe_arr,delimiter=',')

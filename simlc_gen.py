@@ -106,8 +106,8 @@ dur_vals = list(eruption_chars['Duration'].values)
 #for qpe sample create distributions for amplitude, duration, and duty cycle
 #all variables are to be fit to exponentially modified gaussian distributions
 #in order to provide the tail. Remove eRO-QPE1 for the fitting.
-del amp_vals[-2]
-del dur_vals[-2]
+amp_vals = amp_vals[0:18] + amp_vals[19:]
+dur_vals = dur_vals[0:18] + dur_vals[19:]
 amp_dist = exponnorm.fit(amp_vals)
 amplitudes = np.abs(exponnorm.rvs(amp_dist[0],loc=amp_dist[1],scale=amp_dist[2],size=int(N_lcs/2)))
 dur_dist = exponnorm.fit(dur_vals)

@@ -25,16 +25,19 @@ from stingray.modeling import GaussianLogLikelihood, ParameterEstimation
 
 
 #initialise frame with eRO QPE duty cycles
-df = pd.DataFrame({'Obs':['eRO-QPE1','eRO-QPE2'],'DC':[0.41,0.19]})
+df = pd.DataFrame(columns=['Obs','DC'])
 
 #create list of obsids with multiple eruptions
-obslist = ['0823680101','0831790701','0851180401','0851180501','0864330101','0864560101']
+obslist = ['0823680101','0831790701','0851180401','0851180501','0864330101','0864560101','0872390101','0893810501']
+df['Obs'] = obslist
 start_pars = list([[20,110,2000,12000,32000],
                   [10,100,2000,2000,32000],
                   [10,80,2000,2000,30000],
                   [5,60,2000,6000,50,2000,25000,85,2000,39000],
                   [25,40,2000,30000,30,2000,58000,50,2000,88000,40,2000,122000],
-                  [5,60,2000,22000,60,2000,45000,60,2000,55000,65,2000,75000,55,2000,90000,80,2000,110000,80,2000,120000]]
+                  [5,60,2000,22000,60,2000,45000,60,2000,55000,65,2000,75000,55,2000,90000,80,2000,110000,80,2000,120000],
+                  [5,25,2000,2000,10000],
+                  [5,80,2000,0,10000]]
                   )
 #pdb.set_trace()
 
@@ -63,6 +66,12 @@ for i in range(len(obslist)):
         model += GaussCurve() + GaussCurve() + GaussCurve() + GaussCurve() 
     elif obs == '0864560101':
         model += GaussCurve() + GaussCurve() + GaussCurve() + GaussCurve() + GaussCurve() + GaussCurve() + GaussCurve()    
+    elif obs == '0872390101':
+        model += NGaussFixT(no=9)
+        model.no_1.fixed=True
+    elif obs == '0893810501':
+        model += NGaussFixT(no=3)
+        model.no_1.fixed=True
         
         
         
@@ -91,7 +100,7 @@ for i in range(len(obslist)):
 
         
     duty = t_dur / t_rec
-    df.loc[i+2] = [obs,duty[0]]
+    df.loc[i] = [obs,duty[0]]
     
 df.to_csv('Obs/eruption_dcs.csv')
     

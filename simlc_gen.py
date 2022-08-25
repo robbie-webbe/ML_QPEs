@@ -122,14 +122,11 @@ print("Adding in QPE features.")
 for i in tqdm(range(int(N_lcs/2))):
     #for each curve determine the peak locations
     rec = trec[i]
-    #set the first peak anywhere within a range of size trec centred at 0
-    first_peak = np.random.uniform(low=-rec/2,high=rec/2)
+    #set the first peak anywhere within a range of size trec ending at 0
+    first_peak = np.random.uniform(low=-rec,high=0)
     #determine the no of peaks such that either the start or end could be affected
     #by a peak starting or ending
-    if first_peak < 0:
-        no_peaks = int((Period // rec) + 2)
-    else:
-        no_peaks = int((Period // rec) + 1)
+    no_peaks = int((Period // rec) + 3)
     
     #for each qpe curve create the underlying gaussian eruptions
     peak_profile = 1 + NGaussFixT(qpe_arr[0], no = no_peaks, amplitude = amplitudes[i], 

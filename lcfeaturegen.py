@@ -7,7 +7,7 @@ Created on Tue Aug 23 21:45:53 2022
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from scipy.stats import kurtosis, skew, iqr
 from stingray import Lightcurve
 from stingray.crosscorrelation import AutoCorrelation
@@ -41,9 +41,9 @@ def lcfeat(lc,qpe=0):
     
     #Initialise an empty output array 
     features = np.zeros(15)
-    
-    plt.plot(lc[0],lc[1])
-    plt.show()
+
+#    plt.plot(lc[0],lc[1])
+#    plt.show()
     
     #calculate the mean and standard deviation of the curve
     mean = np.average(lc[1])
@@ -67,22 +67,22 @@ def lcfeat(lc,qpe=0):
     #reverse the lightcurve
     lc_reverse = np.flip(lc[1])
     features[9] = np.sum(((lc_reverse-mean)/std)*((lc[1]-mean)/std))
-    print(features)
+#    print(features)
     
     #create the AutoCorrelation for the lightcurve
-    acf = AutoCorrelation(Lightcurve(time=lc[0],counts=lc[1]),mode='full')
+    acf = AutoCorrelation(Lightcurve(time=lc[0],counts=lc[1],dt=50,skip_checks=True),mode='full')
     #split the autocorrelation for positive lags
     acf_pos = acf.corr[np.where(acf.time_lags >= 0)[0]]
     
     #determine the zero value for correlation and the first time when the curve goes -ve
     acf0 = acf_pos[0]
-    print(acf0)
+#    print(acf0)
     first_zero = np.where(acf_pos < 0)[0][0]
-    print(first_zero)
+#    print(first_zero)
     
     #pick the maximum value after the first zero and out put to array
-    print(acf_pos)
-    print(acf_pos[first_zero:])
+#    print(acf_pos)
+#    print(acf_pos[first_zero:])
     acf_2nd_max = max(acf_pos[first_zero:])
     features[10] = acf_2nd_max / acf0
     

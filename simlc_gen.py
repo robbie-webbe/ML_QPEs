@@ -126,7 +126,10 @@ for i in tqdm(range(int(N_lcs/2))):
     first_peak = np.random.uniform(low=-rec/2,high=rec/2)
     #determine the no of peaks such that either the start or end could be affected
     #by a peak starting or ending
-    no_peaks = int((Period // rec) + 2)
+    if first_peak < 0:
+        no_peaks = int((Period // rec) + 2)
+    else:
+        no_peaks = int((Period // rec) + 1)
     
     #for each qpe curve create the underlying gaussian eruptions
     peak_profile = 1 + NGaussFixT(qpe_arr[0], no = no_peaks, amplitude = amplitudes[i], 

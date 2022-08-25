@@ -21,7 +21,7 @@ def lcfeat(lc,qpe=0):
         - Proportion of points at least 1, 2, 3, 4, 5 and 6 sigma from the mean
         - kurtosis
         - skew
-        - reverse autocorrelation
+        - Reverse crosscorrelation, normalised against STD
         - Autocorrelation max after first 0
         - Interquartile Range / Standard Deviation
         - CSSD (Consecutive Same Sign Deviations from the mean)

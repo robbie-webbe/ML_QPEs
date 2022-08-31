@@ -19,11 +19,11 @@ def lcfeat(lc,qpe=0):
     simulated lightcurve for use with ML classification methods. Features are:
         - Standard Deviation/Mean
         - Proportion of points at least 1, 2, 3, 4, 5 and 6 sigma from the mean
-        - kurtosis
+        - Interquartile Range / Standard Deviation
         - skew
+        - kurtosis
         - Reverse crosscorrelation, normalised against STD
         - Autocorrelation max after first 0
-        - Interquartile Range / Standard Deviation
         - CSSD (Consecutive Same Sign Deviations from the mean)
         - Von Neumann ratio
 
@@ -60,13 +60,16 @@ def lcfeat(lc,qpe=0):
     features[5] = len(np.where((lc[1] >= mean+5*std)|(lc[1] <= mean-5*std))[0])/len(lc[1])
     features[6] = len(np.where((lc[1] >= mean+6*std)|(lc[1] <= mean-6*std))[0])/len(lc[1])
     
+    #calculate the IQR / STD
+    features[7] = iqr(lc[1])/std
+    
     #determine the skew and kurtosis of the datasets and pass to the output
-    features[7] = kurtosis(lc[1])
     features[8] = skew(lc[1])
+    features[9] = kurtosis(lc[1])
     
     #reverse the lightcurve
     lc_reverse = np.flip(lc[1])
-    features[9] = np.sum(((lc_reverse-mean)/std)*((lc[1]-mean)/std))
+    features[10] = np.sum(((lc_reverse-mean)/std)*((lc[1]-mean)/std))
 #    print(features)
     
     #create the AutoCorrelation for the lightcurve
@@ -84,10 +87,9 @@ def lcfeat(lc,qpe=0):
 #    print(acf_pos)
 #    print(acf_pos[first_zero:])
     acf_2nd_max = max(acf_pos[first_zero:])
-    features[10] = acf_2nd_max / acf0
+    features[11] = acf_2nd_max / acf0
     
-    #calculate the IQR / STD
-    features[11] = iqr(lc[1])/std
+
     
     #calculate the deviations of the lightcurve from its mean
     deviations = lc[1] - mean

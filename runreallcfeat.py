@@ -23,8 +23,8 @@ for file in dirlist:
         obslist.append(file)
         
 #initialise an output dataframe with columns for name, the 14 features and for QPE?
-out_df = pd.DataFrame(columns=['ObsID','STD/Mean','Prop < 1STD','Prop < 2STD','Prop < 3STD',
-                               'Prop < 4STD','Prop < 5STD','Prop < 6STD','IQR/STD','Skew',
+out_df = pd.DataFrame(columns=['ObsID','STD/Mean','Prop > 1STD','Prop > 2STD','Prop > 3STD',
+                               'Prop > 4STD','Prop > 5STD','Prop > 6STD','IQR/STD','Skew',
                                'Kurtosis','Rev CCF','2nd ACF','CSSD','Von Neumann Ratio',
                                'QPE?'])
 
@@ -44,10 +44,13 @@ for i in range(len(obslist)):
     #create a lightcurve for the observation, rebin it to 50s and zero-time
     lc = XMMtolc('Obs/'+obslist[i],t_bin=10)
     lc = lc.shift(-lc.time[0]).rebin(50)
-    lc.plot()
+    try:
+        lc.rebin(200).plot()
+    except:
+        lc.plot()
     
     #set the first column to be the name of the obsid
-    contains_qpe = int(input('Does this lightcurve contain a QPE?: '))
+    contains_qpe = int(input('Does this lightcurve contain a QPE? (1 - QPE. 0 - No QPE): '))
     out_df.iloc[i,1:] = lcfeat([lc.time,lc.counts],
                                qpe=contains_qpe)
 

@@ -88,7 +88,7 @@ for i in tqdm(range(int(N_lcs/2))):
     wo_qpe_arr[i+1,:] = lc[1]
     
 #save the lcs for the sample without qpes
-np.savetxt('LCGen/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
 
 #generate simulated lightcurves for the lcs with qpes
 print('Pre QPEs')
@@ -132,7 +132,7 @@ for i in tqdm(range(int(N_lcs/2))):
     peak_profile = 1 + NGaussFixT(qpe_arr[0], no = no_peaks, amplitude = amplitudes[i], 
                              width = durations[i], position = first_peak, recurrence = trec[i])
     
-    print(amplitudes[i],durations[i],first_peak,trec[i])
+#    print(amplitudes[i],durations[i],first_peak,trec[i])
 
 #    fix,ax1 = plt.subplots()
 #    ax2 = ax1.twinx()
@@ -147,6 +147,6 @@ for i in tqdm(range(int(N_lcs/2))):
 #    plt.show()
 
 #save the lcs for the sample with qpes
-np.savetxt('LCGen/qpe_sample.csv',qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/qpe_sample.csv',qpe_arr,delimiter=',')
 
 

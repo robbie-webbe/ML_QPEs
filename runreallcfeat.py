@@ -29,24 +29,36 @@ out_df = pd.DataFrame(columns=['ObsID','STD/Mean','Prop > 1STD','Prop > 2STD','P
                                'QPE?'])
 
 obsids = []
+rb = float(input('Enter new time binning for lightcurves for features (Default 50s): '))
 #for each observation inj the list
 for i in range(len(obslist)):
     #extract the obsid
     obsid = obslist[i][0:10]
-    obsids.append(obsid)
+    #check if the lightcurve can be rebinned to the right length
+    if rb:
+        lc = XMMtolc('Obs/'+obslist[i],t_bin=10)
+        try:
+            lc.rebin(rb)
+            obsids.append(obsid)
+        except:
+            print(obsid+' cannot be rebinned to that length.')
     
 out_df['ObsID'] = obsids
 
+print(obsids)
 
-#for each observation inj the list
-for i in range(len(obslist)):
+#for each observation in the list
+for i in range(len(obsids)):
     print(obsids[i])
+    
     #create a lightcurve for the observation, rebin it to 50s and zero-time
-    lc = XMMtolc('Obs/'+obslist[i],t_bin=10)
-    lc = lc.shift(-lc.time[0]).rebin(50)
     try:
-        lc.rebin(200).plot()
+        lc = XMMtolc('Obs/'+obsids[i]+'_.2-2.0_t10_pn.lc',t_bin=10)
+        lc = lc.shift(-lc.time[0]).rebin(rb)
+        lc.plot()
     except:
+        lc = XMMtolc('Obs/'+obsids[i]+'_.2-2.0_t10_pn_filt.lc',t_bin=10)
+        lc = lc.shift(-lc.time[0]).rebin(rb)
         lc.plot()
     
     #set the first column to be the name of the obsid
@@ -54,4 +66,7 @@ for i in range(len(obslist)):
     out_df.iloc[i,1:] = lcfeat([lc.time,lc.counts],
                                qpe=contains_qpe)
 
-out_df.to_csv('Features/real_obs_feats.csv',index=False)
+if rb:
+    out_df.to_csv('Features/realobs_test_data_dt'+str(rb)+'.csv',index=False)
+else:
+    out_df.to_csv('Features/realobs_test_data.csv',index=False)

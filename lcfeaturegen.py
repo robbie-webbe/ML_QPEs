@@ -93,23 +93,31 @@ def lcfeat(lc,qpe=0):
     
     #calculate the deviations of the lightcurve from its mean
     deviations = lc[1] - mean
-    CSSD_count = 0
     
-    #for each set of three points check if all three are above or below the mean
-    for k in range(len(lc[1])-2):
-        if (deviations[k] > 0) and (deviations[k+1] > 0) and (deviations[k+2] > 0):
-            CSSD_count += 1
-        elif (deviations[k] < 0) and (deviations[k+1] < 0) and (deviations[k+2] < 0):
-            CSSD_count += 1
+    if len(lc[0]) > 2:
+        CSSD_count = 0
+        
+        #for each set of three points check if all three are above or below the mean
+        for k in range(len(lc[1])-2):
+            if (deviations[k] > 0) and (deviations[k+1] > 0) and (deviations[k+2] > 0):
+                CSSD_count += 1
+            elif (deviations[k] < 0) and (deviations[k+1] < 0) and (deviations[k+2] < 0):
+                CSSD_count += 1
+        
+        #normalise the CSSD count by N-2
+        features[12] = CSSD_count / (len(lc[1])-2)
+        
+    else:
+        features[12] = 0
     
-    #normalise the CSSD count by N-2
-    features[12] = CSSD_count / (len(lc[1])-2)
-    
-    #calculate the numerator for the Von Neumann ratio
-    VN_num = 0
-    for j in range(len(lc[1])-1):
-        VN_num += (lc[1][j+1] - lc[1][j])**2
-    features[13] = (VN_num/(len(lc[1])-1))/(std**2)
+    if len(lc[0]) > 1:
+        #calculate the numerator for the Von Neumann ratio
+        VN_num = 0
+        for j in range(len(lc[1])-1):
+            VN_num += (lc[1][j+1] - lc[1][j])**2
+        features[13] = (VN_num/(len(lc[1])-1))/(std**2)
+    else:
+        features[13] = 0
     
     if qpe == 1:
         features[14] = 1

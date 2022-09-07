@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['simlc_gen.py', 'runreallcfeat.py']
+recent_files = ['simlc_gen.py', 'runreallcfeat.py', 'lcfeaturegen.py']
 
 [main]
 version = 0.2.0

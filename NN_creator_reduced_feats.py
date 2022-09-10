@@ -16,7 +16,7 @@ import keras_tuner as kt
 from random import sample, shuffle
 from itertools import combinations
 
-x = 13
+x = 12
 dt = 50
 
 #import the training/validation data and the real & simulated testing data

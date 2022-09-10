@@ -6,6 +6,7 @@ Created on Thu Sep  8 11:13:09 2022
 @author: do19150
 """
 
+import os
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -15,19 +16,34 @@ import keras_tuner as kt
 from random import sample, shuffle
 
 #import the training/validation data and the real & simulated testing data
-try:
-    train_val_data = np.loadtxt('/Users/do19150/Gits/ML_QPE/Features/train_val_data_dt1000.csv',delimiter=',')
-except:
-    train_val_data = np.loadtxt('/home/do19150/Gits/ML_QPE/Features/train_val_data_dt1000.csv',delimiter=',')
-try:
-    simlc_test_data = np.loadtxt('/Users/do19150/Gits/ML_QPE/Features/simtest_data_dt1000.csv',delimiter=',')
-except:
-    simlc_test_data = np.loadtxt('/home/do19150/Gits/ML_QPE/Features/simtest_data_dt1000.csv',delimiter=',')
-try:
-    reallc_test_data = pd.read_csv('/Users/do19150/Gits/ML_QPE/Features/realobs_test_data_dt1000.0.csv',dtype='object')
-except:
-    reallc_test_data = pd.read_csv('/home/do19150/Gits/ML_QPE/Features/realobs_test_data_dt1000.0.csv',dtype='object')
+dt = 1000
 
+#import the training/validation data and the real & simulated testing data
+if dt == 50:
+    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data.csv',delimiter=',')
+elif dt == 250:
+    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt250.csv',delimiter=',')
+else:
+    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt1000.csv',delimiter=',')
+    
+if dt == 50:
+    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data.csv',delimiter=',')
+elif dt == 250:
+    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt250.csv',delimiter=',')
+else:
+    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt1000.csv',delimiter=',')
+    
+if dt == 50:
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data.csv',dtype='object')
+elif dt == 250:
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt250.0.csv',dtype='object')
+else:
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt1000.0.csv',dtype='object')
+
+reallc_test_data = reallc_test_data.astype({'STD/Mean':'float32','Prop > 1STD':'float32','Prop > 2STD':'float32','Prop > 3STD':'float32',
+                        'Prop > 4STD':'float32','Prop > 5STD':'float32','Prop > 6STD':'float32',
+                        'IQR/STD':'float32','Skew':'float32','Kurtosis':'float32','Rev CCF':'float32',
+                        '2nd ACF':'float32','CSSD':'float32','Von Neumann Ratio':'float32','QPE?':'float32'})
 
 #split the train/validation data 80%/20% into training and validation
 index_range = list(np.arange(len(train_val_data)))
@@ -68,6 +84,8 @@ def model_builder(hp):
                 # Tune number of units separately, between 2 and 196
                 units=hp.Int(f'units_{i}', min_value=2, max_value=196, step=1),
                 activation='relu'))
+        
+    model.add(layers.Dense(2,activation='relu'))
 
     #select the best learning rate
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=hp.Choice('learning_rate', values=[1e-2, 1e-3, 1e-4])),
@@ -99,7 +117,7 @@ best_model = tuner.hypermodel.build(best_hps)
 best_model.fit(input_data, input_labels, epochs=best_epoch, validation_data=(check_data,check_labels))
 
 #save the model to the relevant directory
-best_model.save('saved_models/14_feats/dt1000')
+best_model.save('saved_models/14_feats/dt'+str(int(dt)))
 
 #create the simulated testing feature and label sets
 simtest_data = []
@@ -122,7 +140,7 @@ shuffle(realtest_indices)
 for i in realtest_indices:
     realtest_obsids.append(reallc_test_data.iloc[i,0])
     realtest_data.append(list(reallc_test_data.iloc[i,1:15].astype('float32')))
-    realtest_labels.append([float(reallc_test_data.iloc[i,15])])
+    realtest_labels.append([int(reallc_test_data.iloc[i,15])])
 
 realtest_loss, realtest_acc = best_model.evaluate(realtest_data, realtest_labels, verbose=2)
 print('\nTest accuracy:', realtest_acc)
@@ -140,8 +158,13 @@ real_preds_out['Probabilities'] = predictions.tolist()
 for i in range(len(real_preds_out)):
     real_preds_out.iloc[i,1] = int(realtest_labels[i][0])
     
-real_preds_out.to_csv('NN_results/all_feats_dt1000.csv',index=False)
+real_preds_out.to_csv('NN_results/all_feats_dt'+str(int(dt))+'.csv',index=False)
+
+best_model.build(input_shape=(None,14))
+best_model.summary()
     
+
+
 
 
 

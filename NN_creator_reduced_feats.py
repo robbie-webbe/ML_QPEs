@@ -157,14 +157,7 @@ for i in range(len(combos)):
         feats = []
         for k in feature_combination:
             feats.append(all_realtest_data[j][k])
-        realtest_data.append(feats)
-        
-    print(len(input_data),len(input_data[0]),len(input_labels))
-    print(len(check_data),len(check_data[0]),len(check_labels))
-    print(len(simtest_data),len(simtest_data[0]),len(simtest_labels))
-    print(len(realtest_data),len(realtest_data[0]),len(realtest_labels))
-    
-    
+        realtest_data.append(feats)    
     
     #create a model for the subset
     tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3, 
@@ -208,15 +201,15 @@ for i in range(len(combos)):
     predictions = probability_model.predict(realtest_data)
     
     realtest_preds = []
-    for i in range(len(predictions)):
-        realtest_preds.append(np.argmax(predictions[i]))
+    for j in range(len(predictions)):
+        realtest_preds.append(np.argmax(predictions[j]))
         
     real_preds_out = pd.DataFrame(columns=['OBSID','Real Label','Pred Label','Probabilities'],dtype='object')
     real_preds_out['OBSID'] = realtest_obsids
     real_preds_out['Pred Label'] = realtest_preds
     real_preds_out['Probabilities'] = predictions.tolist()
-    for i in range(len(real_preds_out)):
-        real_preds_out.iloc[i,1] = int(realtest_labels[i][0])
+    for j in range(len(real_preds_out)):
+        real_preds_out.iloc[j,1] = int(realtest_labels[j][0])
         
     real_preds_out.to_csv('NN_results/'+str(x)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
     

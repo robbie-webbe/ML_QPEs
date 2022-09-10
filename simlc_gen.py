@@ -50,7 +50,6 @@ def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
     return rng
 
 
-
 #set the total number of LCs to create
 N_lcs = int(input('How many lightcurves are to be simulated: '))
 

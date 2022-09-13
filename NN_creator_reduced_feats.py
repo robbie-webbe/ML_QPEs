@@ -16,8 +16,12 @@ import keras_tuner as kt
 from random import sample, shuffle
 from itertools import combinations
 
-x = 12
+
+x = 2
 dt = 50
+combs_sum = 0
+for i in np.arange(0,x):
+    combs_sum += len(list(combinations(np.arange(x),i)))
 
 #import the training/validation data and the real & simulated testing data
 if dt == 50:
@@ -96,8 +100,13 @@ for i in realtest_indices:
 def model_builder(hp):
     model = keras.Sequential()
 
+    model.add(layers.Dense(
+            # Tune number of units separately, between 2 and 196
+            units=hp.Int(f'units_0', min_value=1, max_value=min(combs_sum,196), step=1),
+            activation='relu'))
+
     # Tune the number of dense layers between 1 and 3
-    for i in range(hp.Int('num_layers', 1, 3)):
+    for i in range(hp.Int('num_layers', 0, 2)):
         model.add(
             layers.Dense(
                 # Tune number of units separately, between 2 and 196
@@ -212,6 +221,8 @@ for i in range(len(combos)):
         real_preds_out.iloc[j,1] = int(realtest_labels[j][0])
         
     real_preds_out.to_csv('NN_results/'+str(x)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
+    best_model.build(input_shape=(None,x))
+    best_model.summary()
     
 output_df.to_csv('NN_results/'+str(x)+'feats_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
     

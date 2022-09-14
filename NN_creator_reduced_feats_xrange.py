@@ -119,7 +119,7 @@ for x in y:
         model.add(layers.Dense(2,activation='relu'))
     
         #select the best learning rate
-        model.compile(optimizer=keras.optimizers.Adam(learning_rate=hp.Choice('learning_rate', values=[1e-2, 1e-3, 1e-4])),
+        model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-3),
                     loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                     metrics=['accuracy'])
     
@@ -172,8 +172,7 @@ for x in y:
             realtest_data.append(feats)    
         
         #create a model for the subset
-        tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3, 
-                             directory='my_dir', project_name='working'+str(x)+'_'+str(i), overwrite=True)
+        tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3)
         
         stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
         #find the best confiuratioon for this set

@@ -17,7 +17,7 @@ from random import sample, shuffle
 from itertools import combinations
 
 
-x = 2
+x = 3
 dt = 50
 combs_sum = 0
 for i in np.arange(0,x):

@@ -17,11 +17,8 @@ from random import sample, shuffle
 from itertools import combinations
 
 
-x = 3
+x = 1
 dt = 50
-combs_sum = 0
-for i in np.arange(0,x):
-    combs_sum += len(list(combinations(np.arange(x),i)))
 
 #import the training/validation data and the real & simulated testing data
 if dt == 50:
@@ -100,17 +97,12 @@ for i in realtest_indices:
 def model_builder(hp):
     model = keras.Sequential()
 
-    model.add(layers.Dense(
-            # Tune number of units separately, between 2 and 196
-            units=hp.Int(f'units_0', min_value=1, max_value=min(combs_sum,196), step=1),
-            activation='relu'))
-
     # Tune the number of dense layers between 1 and 3
-    for i in range(hp.Int('num_layers', 0, 2)):
+    for i in range(hp.Int('num_layers', 1, 3)):
         model.add(
             layers.Dense(
                 # Tune number of units separately, between 2 and 196
-                units=hp.Int(f'units_{i}', min_value=2, max_value=196, step=1),
+                units=hp.Int(f'units_{i}', min_value=3, max_value=196, step=1),
                 activation='relu'))
         
     model.add(layers.Dense(2,activation='relu'))

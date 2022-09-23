@@ -56,7 +56,7 @@ def model_builder(hp):
     model = keras.Sequential()
 
     # Tune the number of dense layers between 1 and 3
-    for i in range(hp.Int('num_layers', 1, 3)):
+    for i in range(hp.Int('num_layers', 1, 2)):
         model.add(
             layers.Dense(
                 # Tune number of units separately, between 2 and 196
@@ -161,7 +161,7 @@ for i in range(len(combos)):
     
     #create a model for the subset
     tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3, 
-                         directory='my_dir', project_name='intro_to_kt', overwrite=True)
+                         directory=str(x)+'feats_wip', project_name='combo'+str(i), overwrite=True)
     
     stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
     #find the best confiuratioon for this set
@@ -211,14 +211,22 @@ for i in range(len(combos)):
     for j in range(len(real_preds_out)):
         real_preds_out.iloc[j,1] = int(realtest_labels[j])
         
-    completeness = len(real_preds_out[real_preds_out['Real Label'] == 1][real_preds_out['Pred Label']== 1])/len(real_preds_out[real_preds_out['Real Label'] == 1])
-    if len([real_preds_out['Pred Label'] == 1]) == 0:
-        purity = 0
-    else:
-        purity = len(real_preds_out[real_preds_out['Real Label'] == 1][real_preds_out['Pred Label']== 1])/len(real_preds_out[real_preds_out['Pred Label'] == 1])
+    label_pairs = []
+    for j in range(len(real_preds_out)):
+        label_pairs.append([real_preds_out['Real Label'].values[j],real_preds_out['Pred Label'].values[j]])
         
-    output_df.iloc[i,4] = completeness
-    output_df.iloc[i,5] = purity
+    no_true_pos = label_pairs.count([1,1])
+    no_false_neg = label_pairs.count([1,0])
+    no_false_pos = label_pairs.count([0,1])
+    print(no_true_pos,no_false_neg,no_false_pos)
+    print(output_df)
+        
+    output_df.iloc[i,4] = no_true_pos / (no_true_pos + no_false_neg)
+    
+    if (no_false_pos + no_true_pos) == 0:
+        output_df.iloc[i,5] = 0
+    else:
+        output_df.iloc[i,5] = no_true_pos / (no_false_pos + no_true_pos)
         
     real_preds_out.to_csv('NN_results/'+str(x)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
     best_model.build(input_shape=(None,x))

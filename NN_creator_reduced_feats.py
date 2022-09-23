@@ -63,6 +63,7 @@ def model_builder(hp):
                 units=hp.Int(f'units_{i}', min_value=3, max_value=196, step=1),
                 activation='relu'))
         
+    #add in an output layer
     model.add(layers.Dense(2,activation='relu'))
 
     #select the best learning rate

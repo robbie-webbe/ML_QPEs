@@ -85,11 +85,11 @@ def build_test_NN(no_feats):
         
         #create sub-data sets for this combination of columns
         feature_combination = combos[i]
-        print(feature_combination)
         
         combo_columns = []
         for j in feature_combination:
             combo_columns.append(col_names[j])
+        print('Combination '+str(i),'\n')
         print(combo_columns)
             
         #create empty containers for features and labels
@@ -188,16 +188,16 @@ def build_test_NN(no_feats):
         #save the model to the relevant directory
         best_model.save('saved_models/'+str(no_feats)+'_feats/feature_set'+str(i)+'_dt'+str(int(dt)))
         
-        valid_loss, valid_acc = best_model.evaluate(check_data,check_labels,verbose=1)
+        valid_loss, valid_acc = best_model.evaluate(check_data,check_labels,verbose=0)
         print('\nValidation accuracy:', valid_acc)
         output_df.iloc[i,1] = valid_acc
         
-        simtest_loss, simtest_acc = best_model.evaluate(simtest_data, simtest_labels, verbose=1)
-        print('\nTest accuracy:', simtest_acc)
+        simtest_loss, simtest_acc = best_model.evaluate(simtest_data, simtest_labels, verbose=0)
+        print('\nSimulated test accuracy:', simtest_acc)
         output_df.iloc[i,2] = simtest_acc
         
-        realtest_loss, realtest_acc = best_model.evaluate(realtest_data, realtest_labels, verbose=1)
-        print('\nTest accuracy:', realtest_acc)
+        realtest_loss, realtest_acc = best_model.evaluate(realtest_data, realtest_labels, verbose=0)
+        print('\nReal test accuracy:', realtest_acc)
         output_df.iloc[i,3] = realtest_acc
         
         probability_model = tf.keras.Sequential([best_model, tf.keras.layers.Softmax()])
@@ -221,8 +221,6 @@ def build_test_NN(no_feats):
         no_true_pos = label_pairs.count([1,1])
         no_false_neg = label_pairs.count([1,0])
         no_false_pos = label_pairs.count([0,1])
-        print(no_true_pos,no_false_neg,no_false_pos)
-        print(output_df)
             
         output_df.iloc[i,4] = no_true_pos / (no_true_pos + no_false_neg)
         
@@ -234,6 +232,9 @@ def build_test_NN(no_feats):
         real_preds_out.to_csv('NN_results/'+str(no_feats)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
         best_model.build(input_shape=(None,no_feats))
         best_model.summary()
+        
+        print('\nReal test completeness:', output_df.iloc[i,4])
+        print('\nReal test purity:', output_df.iloc[i,5])
         
     output_df.to_csv('NN_results/'+str(no_feats)+'feats_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
     

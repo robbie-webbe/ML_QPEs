@@ -85,7 +85,7 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
         for i in exc_feats:
             poss_feats.remove(i)
         
-    combos = list(poss_feats,no_feats)
+    combos = list(combinations(poss_feats,no_feats))
     for i in np.arange(len(combos)):
         c = []
         if inc_feats:

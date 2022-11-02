@@ -76,6 +76,7 @@ def model_builder(hp):
 def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max=10000):
     
     poss_feats = list(np.arange(14))
+    feats_name = no_feats
     
     if inc_feats:
         no_feats -= len(inc_feats)
@@ -187,7 +188,7 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
         
         #create a model for the subset
         tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3, 
-                             directory=str(no_feats)+'feats_wip', project_name='combo'+str(i), overwrite=True)
+                             directory=str(feats_name)+'feats_wip', project_name='combo'+str(i), overwrite=True)
         
         stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
         #find the best confiuratioon for this set
@@ -209,7 +210,7 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
         best_model.fit(input_data, input_labels, epochs=best_epoch, validation_data=(check_data,check_labels),verbose=0)
         
         #save the model to the relevant directory
-        best_model.save('saved_models/'+str(no_feats)+'_feats/feature_set'+str(i)+'_dt'+str(int(dt)))
+        best_model.save('saved_models/'+str(feats_name)+'_feats/feature_set'+str(i)+'_dt'+str(int(dt)))
         
         valid_loss, valid_acc = best_model.evaluate(check_data,check_labels,verbose=0)
         print('\nValidation accuracy:', valid_acc)
@@ -257,14 +258,14 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
         else:
             output_df.iloc[i,6] = (2*output_df.iloc[i,4]*output_df.iloc[i,5])/(output_df.iloc[i,4]+output_df.iloc[i,5])
             
-        real_preds_out.to_csv('NN_results/'+str(no_feats)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
+        real_preds_out.to_csv('NN_results/'+str(feats_name)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
         best_model.build(input_shape=(None,no_feats))
         best_model.summary()
         
         print('\nReal test completeness:', output_df.iloc[i,4])
         print('\nReal test purity:', output_df.iloc[i,5])
         
-    output_df.to_csv('NN_results/'+str(no_feats)+'feats_combos'+str(combo_min)+'-'+str(combo_max)+'_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
+    output_df.to_csv('NN_results/'+str(feats_name)+'feats_combos'+str(combo_min)+'-'+str(combo_max)+'_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
     
     return output_df
     

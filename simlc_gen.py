@@ -17,7 +17,7 @@ import pandas as pd
 #import pdb
 
 from scipy.stats import exponnorm
-from DoneLC import Done_LC
+from TKLC import TK_LC
 
 def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
     
@@ -77,22 +77,25 @@ qpe_arr[0,:] = t
 slope_mean = float(input('Mean value for power law slopes to be drawn: '))
 slope_std = float(input('Standard deviation for power law slopes to be drawn: '))
 
-#generate random power law slopes for the simulated lcs, ensuring all are positive
-slopes = np.abs(np.random.normal(slope_mean,slope_std,N_lcs))
+#generate random power law slopes for the simulated lcs without qpes, ensuring all are positive
+wqpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
 
 #generate simulated lightcurves for the lcs without qpes
 print('Without QPEs')
 for i in tqdm(range(int(N_lcs/2))):
-    lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
+    lc = TK_LC(T=Period,dt=tbin,beta=wqpe_slopes[i])
     wo_qpe_arr[i+1,:] = lc[1]
     
 #save the lcs for the sample without qpes
 np.savetxt('LCGen/Diff_dt/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
 
+#generate random power law slopes for the simulated lcs with qpes, ensuring all are positive
+qpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
+
 #generate simulated lightcurves for the lcs with qpes
 print('Pre QPEs')
 for i in tqdm(range(int(N_lcs/2))):
-    lc = Done_LC(Period,tbin,slopes[i],phi_type='u')
+    lc = TK_LC(T=Period,dt=tbin,beta=qpe_slopes[i])
     qpe_arr[i+1,:] = lc[1]
 
 #import the eruption characteristics file

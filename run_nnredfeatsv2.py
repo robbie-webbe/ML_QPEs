@@ -81,6 +81,9 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
     output_df = pd.DataFrame(columns=['Features Used','Validation Accuracy','Sim Test Accuracy','Real Test Accuracy','Real Test Completeness','Real Test Purity','F1 Score'])
     output_df['Features Used'] = list(combinations(np.arange(14),no_feats))
     
+    if combo_max > len(combos):
+        combo_max = len(combos)
+    
     combos_to_use = np.arange(combo_min,combo_max)
     
     for i in combos_to_use:
@@ -242,6 +245,7 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
         
         print('\nReal test completeness:', output_df.iloc[i,4])
         print('\nReal test purity:', output_df.iloc[i,5])
+        print('\nReal test F1 score:', output_df.iloc[i,6])
         
     output_df.to_csv('NN_results/'+str(no_feats)+'feats_combos'+str(combo_min)+'-'+str(combo_max)+'_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
     

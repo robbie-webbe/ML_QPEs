@@ -264,6 +264,7 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
         
         print('\nReal test completeness:', output_df.iloc[i,4])
         print('\nReal test purity:', output_df.iloc[i,5])
+        print('\nReal test F1 score:', output_df.iloc[i,6])
         
     output_df.to_csv('NN_results/'+str(feats_name)+'feats_combos'+str(combo_min)+'-'+str(combo_max)+'_dt'+str(int(dt))+'_overall_accuracy.csv',index=False)
     

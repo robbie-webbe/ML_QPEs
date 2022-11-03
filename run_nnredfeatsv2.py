@@ -205,6 +205,7 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
         print('\nReal test accuracy:', realtest_acc)
         output_df.iloc[i,3] = realtest_acc
         
+
         probability_model = tf.keras.Sequential([best_model, tf.keras.layers.Softmax()])
         predictions = probability_model.predict(realtest_data)
         

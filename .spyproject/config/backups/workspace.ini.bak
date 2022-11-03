@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['run_nnredfeats.py', 'feature_quality.py', 'run_nnredfeatsv2.py', 'NN_results/14feats_dt50_overall_accuracy.csv']
+recent_files = ['../../.spyder-py3/temp.py', 'run_nnredfeatsv2.py']
 
 [main]
 version = 0.2.0

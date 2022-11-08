@@ -123,6 +123,8 @@ def lcfeat(lc,qpe=0):
         features[14] = 1
     elif qpe == 0:
         features[14] = 0
+    elif qpe == '?':
+        features = features[0:-1]
     else:
         return print('Must select 0 - No QPEs or 1 - QPEs present.')
     

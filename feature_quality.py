@@ -64,15 +64,15 @@ def feat_quality(feat):
             feat13with.append(i)        
     
     
-    feat1wo_f1 = np.array(itemgetter(*feat1without)(df1['F1 Score']))
-    feat2w_f1 = np.array(itemgetter(*feat2with)(df2['F1 Score']))
-    feat2wo_f1 = np.array(itemgetter(*feat2without)(df2['F1 Score']))
+    feat1wo_f1 = np.array(itemgetter(*feat1without)(df1['Metric Value']))
+    feat2w_f1 = np.array(itemgetter(*feat2with)(df2['Metric Value']))
+    feat2wo_f1 = np.array(itemgetter(*feat2without)(df2['Metric Value']))
     feat3w_f1 = np.array(itemgetter(*feat3with)(df3['F1 Score']))
     
-    feat11wo_f1 = np.array(itemgetter(*feat11without)(df11['F1 Score']))
-    feat12w_f1 = np.array(itemgetter(*feat12with)(df12['F1 Score']))
-    feat12wo_f1 = np.array(itemgetter(*feat12without)(df12['F1 Score']))
-    feat13w_f1 = np.array(itemgetter(*feat13with)(df13['F1 Score']))     
+    feat11wo_f1 = np.array(itemgetter(*feat11without)(df11['Metric Value']))
+    feat12w_f1 = np.array(itemgetter(*feat12with)(df12['Metric Value']))
+    feat12wo_f1 = np.array(itemgetter(*feat12without)(df12['Metric Value']))
+    feat13w_f1 = np.array(itemgetter(*feat13with)(df13['Metric Value']))     
     
     avg_f1wout = np.average(np.concatenate((feat1wo_f1,feat2wo_f1,feat11wo_f1,feat12wo_f1),axis=None))
     avg_f1w = np.average(np.concatenate((feat2w_f1,feat3w_f1,feat12w_f1,feat13w_f1),axis=None))

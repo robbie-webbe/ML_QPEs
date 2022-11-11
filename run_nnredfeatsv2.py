@@ -78,7 +78,7 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
     combos = list(combinations(np.arange(14),no_feats))
 
     #set up an output df which will contain: features used; sim test accuracy; real test accuracy.
-    output_df = pd.DataFrame(columns=['Features Used','Validation Accuracy','Sim Test Accuracy','Real Test Accuracy','Real Test Completeness','Real Test Purity','F1 Score'])
+    output_df = pd.DataFrame(columns=['Features Used','Validation Accuracy','Sim Test Accuracy','Real Test Accuracy','Real Test Completeness','Real Test Purity','F1 Score','Metric Value'])
     output_df['Features Used'] = list(combinations(np.arange(14),no_feats))
     
     if combo_max > len(combos):
@@ -239,6 +239,11 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
             output_df.iloc[i,6] = 0
         else:
             output_df.iloc[i,6] = (2*output_df.iloc[i,4]*output_df.iloc[i,5])/(output_df.iloc[i,4]+output_df.iloc[i,5])
+            
+        if len(np.where(predictions == predictions[0])[0]) == len(predictions):
+            output_df.iloc[i,7] = 0.0
+        else:
+            output_df.iloc[i,7] = output_df.iloc[i,6]
             
         real_preds_out.to_csv('NN_results/'+str(no_feats)+'feats/featurecombo'+str(i)+'_dt'+str(int(dt))+'_realtest.csv',index=False)
         best_model.build(input_shape=(None,no_feats))

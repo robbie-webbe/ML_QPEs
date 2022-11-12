@@ -275,6 +275,6 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
     
     return output_df
     
-build_test_NN(int(sys.argv[1]),inc_feats=[11],exc_feats=[13],combo_min=int(sys.argv[2]),combo_max=int(sys.argv[3]))
+build_test_NN(int(sys.argv[1]),inc_feats=[10],exc_feats=[13],combo_min=int(sys.argv[2]),combo_max=int(sys.argv[3]))
 
 

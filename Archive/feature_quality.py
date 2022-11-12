@@ -67,7 +67,7 @@ def feat_quality(feat):
     feat1wo_f1 = np.array(itemgetter(*feat1without)(df1['Metric Value']))
     feat2w_f1 = np.array(itemgetter(*feat2with)(df2['Metric Value']))
     feat2wo_f1 = np.array(itemgetter(*feat2without)(df2['Metric Value']))
-    feat3w_f1 = np.array(itemgetter(*feat3with)(df3['F1 Score']))
+    feat3w_f1 = np.array(itemgetter(*feat3with)(df3['Metric Value']))
     
     feat11wo_f1 = np.array(itemgetter(*feat11without)(df11['Metric Value']))
     feat12w_f1 = np.array(itemgetter(*feat12with)(df12['Metric Value']))

@@ -94,11 +94,11 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
                 c.append(j)
         for j in combos[i]:
             c.append(j)
-        combos[i] = sorted(c)
+        combos[i] = tuple(sorted(c))
     
     #set up an output df which will contain: features used; sim test accuracy; real test accuracy.
     output_df = pd.DataFrame(columns=['Features Used','Validation Accuracy','Sim Test Accuracy','Real Test Accuracy','Real Test Completeness','Real Test Purity','F1 Score','Metric Value'])
-    output_df['Features Used'] = list(combinations(np.arange(14),no_feats))
+    output_df['Features Used'] = combos
     
     if combo_max > len(combos):
         combo_max = len(combos)

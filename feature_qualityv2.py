@@ -43,6 +43,9 @@ for i in range(len(df12)):
 for i in range(len(df13)):
     feats13_combos.append(tuplestr_to_list(df13['Features Used'].values[i]))
 
+out_df = pd.DataFrame(columns=['Feature','Overall Change','No. 1->2','Average 1->2','No. 2->3','Average 2->3',
+                               'No. 11->12','Average 11->12','No. 12->13','Average 12->13'])
+out_df['Feature'] = np.arange(14)
 
 def feat_qual2(feat):
     
@@ -51,6 +54,10 @@ def feat_qual2(feat):
     
     #for all of the combinations for 2 features identify those which include
     #the feature needed
+    #create a counter for number of 1->2 combinations considered
+    no_1_2 = 0
+    #create an empty list for the differences from 1->2 feats
+    diff_1_2 = []
     for i in range(len(feats2_combos)):
         combo = feats2_combos[i]
         if feat in combo:
@@ -60,10 +67,16 @@ def feat_qual2(feat):
             
             #if that combination is in the 1 feature df
             if reduced_combo in feats1_combos:
-                #find the locattion in the list of 1 combos and calculate the mv difference.
+                #find the location in the list of 1 combos and calculate the mv difference.
                 idx = feats1_combos.index(reduced_combo)
+                no_1_2 += 1
                 f1_diff.append(df2['Metric Value'].values[i] - df1['Metric Value'].values[idx])
-                
+                diff_1_2.append(df2['Metric Value'].values[i] - df1['Metric Value'].values[idx])
+    
+    #for all of the combinations for 3 features identify those which include
+    #the feature needed
+    no_2_3 = 0
+    diff_2_3 = []
     for i in range(len(feats3_combos)):
         combo = feats3_combos[i]
         if feat in combo:
@@ -71,40 +84,54 @@ def feat_qual2(feat):
             reduced_combo = combo.copy()
             reduced_combo.remove(feat)
             
-            #if that combination is in the 1 feature df
+            #if that combination is in the 2 feature df
             if reduced_combo in feats2_combos:
-                #find the locattion in the list of 1 combos and calculate the mv difference.
+                #find the location in the list of 2 combos and calculate the mv difference.
                 idx = feats2_combos.index(reduced_combo)
+                no_2_3 += 1
                 f1_diff.append(df3['Metric Value'].values[i] - df2['Metric Value'].values[idx])                             
+                diff_2_3.append(df3['Metric Value'].values[i] - df2['Metric Value'].values[idx])
                 
+    no_11_12 = 0
+    diff_11_12 = []            
     for i in range(len(feats12_combos)):
         combo = feats12_combos[i]
         if feat in combo:
-            #then create the list of features without the one being analysed
             reduced_combo = combo.copy()
             reduced_combo.remove(feat)
-            
-            #if that combination is in the 1 feature df
             if reduced_combo in feats11_combos:
-                #find the locattion in the list of 1 combos and calculate the mv difference.
                 idx = feats11_combos.index(reduced_combo)
+                no_11_12 += 1
                 f1_diff.append(df12['Metric Value'].values[i] - df11['Metric Value'].values[idx])
-                
+                diff_11_12.append(df12['Metric Value'].values[i] - df11['Metric Value'].values[idx])
+    
+    no_12_13 = 0
+    diff_12_13 = []
     for i in range(len(feats13_combos)):
         combo = feats13_combos[i]
         if feat in combo:
-            #then create the list of features without the one being analysed
             reduced_combo = combo.copy()
             reduced_combo.remove(feat)
-            
-            #if that combination is in the 1 feature df
             if reduced_combo in feats12_combos:
-                #find the locattion in the list of 1 combos and calculate the mv difference.
                 idx = feats12_combos.index(reduced_combo)
+                no_12_13 += 1
                 f1_diff.append(df13['Metric Value'].values[i] - df12['Metric Value'].values[idx])
+                diff_12_13.append(df13['Metric Value'].values[i] - df12['Metric Value'].values[idx])
                 
-    return np.average(f1_diff)
+    return [np.average(f1_diff), no_1_2, np.average(diff_1_2), no_2_3, np.average(diff_2_3),
+            no_11_12, np.average(diff_11_12), no_12_13, np.average(diff_12_13)]
 
 for i in range(14):
-    print(str(i),feat_qual2(i))
+    quality = feat_qual2(i)
+    out_df.iloc[i,1] = quality[0]
+    out_df.iloc[i,2] = quality[1]
+    out_df.iloc[i,3] = quality[2]
+    out_df.iloc[i,4] = quality[3]
+    out_df.iloc[i,5] = quality[4]
+    out_df.iloc[i,6] = quality[5]
+    out_df.iloc[i,7] = quality[6]
+    out_df.iloc[i,8] = quality[7]
+    out_df.iloc[i,9] = quality[8]
+    
+display(out_df)
     

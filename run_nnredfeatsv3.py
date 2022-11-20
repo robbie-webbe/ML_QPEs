@@ -22,21 +22,21 @@ dt = 50
 
 #import the training/validation data and the real & simulated testing data
 if dt == 50:
-    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data.csv',delimiter=',')
+    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt50.csv',delimiter=',')
 elif dt == 250:
     train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt250.csv',delimiter=',')
 else:
     train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt1000.csv',delimiter=',')
     
 if dt == 50:
-    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data.csv',delimiter=',')
+    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt50.csv',delimiter=',')
 elif dt == 250:
     simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt250.csv',delimiter=',')
 else:
     simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt1000.csv',delimiter=',')
     
 if dt == 50:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data.csv',dtype='object')
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt50.csv',dtype='object')
 elif dt == 250:
     reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt250.0.csv',dtype='object')
 else:

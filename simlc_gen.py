@@ -87,7 +87,7 @@ for i in tqdm(range(int(N_lcs/2))):
     wo_qpe_arr[i+1,:] = lc[1]
     
 #save the lcs for the sample without qpes
-np.savetxt('LCGen/Diff_dt/no_qpe_sample.csv',wo_qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/no_qpe_sample_dt1000.csv',wo_qpe_arr,delimiter=',')
 
 #generate random power law slopes for the simulated lcs with qpes, ensuring all are positive
 qpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
@@ -149,6 +149,6 @@ for i in tqdm(range(int(N_lcs/2))):
 #    plt.show()
 
 #save the lcs for the sample with qpes
-np.savetxt('LCGen/Diff_dt/qpe_sample.csv',qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/qpe_sample_dt1000.csv',qpe_arr,delimiter=',')
 
 

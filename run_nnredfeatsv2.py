@@ -18,7 +18,7 @@ from random import sample, shuffle
 from itertools import combinations
 
 
-dt = 1000
+dt = 250
 
 #import the training/validation data and the real & simulated testing data
 if dt == 50:
@@ -38,9 +38,9 @@ else:
 if dt == 50:
     reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt50.csv',dtype='object')
 elif dt == 250:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt250.0.csv',dtype='object')
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt250.csv',dtype='object')
 else:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt1000.0.csv',dtype='object')
+    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt1000.csv',dtype='object')
     
 reallc_test_data = reallc_test_data.astype({'ObsID':'str','STD/Mean':'float32','Prop > 1STD':'float32','Prop > 2STD':'float32',
                                             'Prop > 3STD':'float32','Prop > 4STD':'float32','Prop > 5STD':'float32','Prop > 6STD':'float32',

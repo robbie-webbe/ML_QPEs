@@ -83,14 +83,14 @@ def f1_opt(input_file):
     
     print('The maximum accuracy was: ',accuracies[opt_acc[0]])
     if len(opt_acc) > 1:
-        print('This was achieved at a confidence values between: ',confidence_vals[opt_acc[0]],confidence_vals[opt_acc[-1]],'\n')
+        print('This was achieved at a confidence values between: ',confidence_vals[opt_acc[0]],' and ',confidence_vals[opt_acc[-1]],'\n')
     else:
         print('This was achieved at a confidence value of: ',confidence_vals[opt_acc],'\n')
     
     
     print('The maximum F1 score was: ',f1scores[opt_f1s[0]])
     if len(opt_f1s) > 1:
-        print('This was achieved at a confidence values between: ',confidence_vals[opt_f1s[0]],confidence_vals[opt_f1s[-1]])
+        print('This was achieved at a confidence values between: ',confidence_vals[opt_f1s[0]],' and ',confidence_vals[opt_f1s[-1]])
     else:
         print('This was achieved at a confidence value of: ',confidence_vals[opt_f1s])
     print('This was achieved with a purity of ',purities[opt_f1s[0]],' and a completeness of ',completenesses[opt_f1s[0]],'\n','\n','\n')

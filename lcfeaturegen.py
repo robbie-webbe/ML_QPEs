@@ -50,6 +50,8 @@ def lcfeat(lc,qpe=0):
     std = np.std(lc[1])
     
     #output the first feature as std/mean
+    if mean == 0:
+        mean += std*0.01
     features[0] = std/mean
     
     #determine the proportions of points more than x stds from the mean

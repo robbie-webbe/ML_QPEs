@@ -83,11 +83,19 @@ wqpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
 #generate simulated lightcurves for the lcs without qpes
 print('Without QPEs')
 for i in tqdm(range(int(N_lcs/2))):
+    #generate the lcs
     lc = TK_LC(T=Period,dt=tbin,beta=wqpe_slopes[i])
-    wo_qpe_arr[i+1,:] = lc[1]
+    #shift them such that all points are positive
+    min_point = min(lc[1])
+    shift_factor = 1+np.abs(np.random.randn())
+    lightcurve = list(lc[1])
+    lightcurve += min_point*shift_factor
     
+    wo_qpe_arr[i+1,:] = lightcurve
+    
+
 #save the lcs for the sample without qpes
-np.savetxt('LCGen/Diff_dt/no_qpe_sample_dt1000.csv',wo_qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/no_qpe_sample_dt'+str(int(tbin))+'.csv',wo_qpe_arr,delimiter=',')
 
 #generate random power law slopes for the simulated lcs with qpes, ensuring all are positive
 qpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
@@ -96,6 +104,10 @@ qpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
 print('Pre QPEs')
 for i in tqdm(range(int(N_lcs/2))):
     lc = TK_LC(T=Period,dt=tbin,beta=qpe_slopes[i])
+    min_point = min(lc[1])
+    shift_factor = 1+np.abs(np.random.randn())
+    lightcurve = list(lc[1])
+    lightcurve += min_point*shift_factor
     qpe_arr[i+1,:] = lc[1]
 
 #import the eruption characteristics file
@@ -149,6 +161,6 @@ for i in tqdm(range(int(N_lcs/2))):
 #    plt.show()
 
 #save the lcs for the sample with qpes
-np.savetxt('LCGen/Diff_dt/qpe_sample_dt1000.csv',qpe_arr,delimiter=',')
+np.savetxt('LCGen/Diff_dt/qpe_sample_dt'+str(int(tbin))+'.csv',qpe_arr,delimiter=',')
 
 

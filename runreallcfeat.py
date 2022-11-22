@@ -67,6 +67,6 @@ for i in range(len(obsids)):
                                qpe=contains_qpe)
 
 if rb:
-    out_df.to_csv('Features/realobs_test_data_dt'+str(rb)+'.csv',index=False)
+    out_df.to_csv('Features/realobs_test_data_dt'+str(int(rb))+'.csv',index=False)
 else:
     out_df.to_csv('Features/realobs_test_data.csv',index=False)

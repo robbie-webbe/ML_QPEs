@@ -55,7 +55,7 @@ col_names = ['STD/Mean','Prop > 1STD','Prop > 2STD','Prop > 3STD','Prop > 4STD',
 def model_builder(hp):
     model = keras.Sequential()
 
-    # Tune the number of dense layers between 1 and 3
+    # Tune the number of dense layers between 1 and 2
     for i in range(hp.Int('num_layers', 1, 2)):
         model.add(
             layers.Dense(

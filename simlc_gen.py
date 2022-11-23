@@ -18,6 +18,7 @@ import pandas as pd
 
 from scipy.stats import exponnorm
 from TKLC import TK_LC
+#from DoneLC import Done_LC
 
 def NGaussFixT(domain,no=2,amplitude=1,width=1,position=0,recurrence=1):
     

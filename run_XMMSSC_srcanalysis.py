@@ -34,9 +34,7 @@ top_cands = []
 #determine which detections have time series that are long enough
 indices = list(np.where((cat[1].data.field('TSERIES') == True)&(cat[1].data.field('EP_ONTIME')>=50000))[0])
 
-#for i in range(len(indices)):
-    
-for i in range(500):
+for i in range(len(indices)):
     index = indices[i]
     
     #pickout the obs id, and the source number in that obs
@@ -99,7 +97,7 @@ for i in range(500):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_250[1] > 0.9 and pred_1000[1] > 0.9:
+                if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
                     top_cands.append([obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -112,12 +110,12 @@ for i in range(500):
                     fig.suptitle('Observation '+obsid+' Source '+srcnum+' PN')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
-                    elif 0.99 > pred_250[1] >= 0.95 and 0.99 > pred_1000[1] >= 0.95:
+                    elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
-                    elif 0.95 > pred_250[1] >= 0.90 and 0.95 > pred_1000[1] >= 0.90:
+                    elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_75/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                         
         #remove any temporarily downloaded files                                
@@ -160,7 +158,7 @@ for i in range(500):
                 preds_dt1000.append([obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'M1'+file[13],pred_1000[1]])
                 
-                if pred_250[1] > 0.9 and pred_1000[1] > 0.9:
+                if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
                     top_cands.append([obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M1'+file[13],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -173,12 +171,12 @@ for i in range(500):
                     fig.suptitle('Observation '+obsid+' Source '+srcnum+' M1')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
-                    elif 0.99 > pred_250[1] >= 0.95 and 0.99 > pred_1000[1] >= 0.95:
+                    elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
-                    elif 0.95 > pred_250[1] >= 0.90 and 0.95 > pred_1000[1] >= 0.90:
+                    elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_75/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                 
         os.system('rm -r _dl_temp_/'+obsid+'/')
@@ -222,7 +220,7 @@ for i in range(500):
                 preds_dt1000.append([obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'M2'+file[13],pred_1000[1]])
                 
-                if pred_250[1] > 0.9 and pred_1000[1] > 0.9:
+                if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
                     top_cands.append([obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M2'+file[13],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -235,12 +233,12 @@ for i in range(500):
                     fig.suptitle('Observation '+obsid+' Source '+srcnum+' M2')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
-                    elif 0.99 > pred_250[1] >= 0.95 and 0.99 > pred_1000[1] >= 0.95:
+                    elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
-                    elif 0.95 > pred_250[1] >= 0.90 and 0.95 > pred_1000[1] >= 0.90:
+                    elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_75/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                                         
         os.system('rm -r _dl_temp_/'+obsid+'/')    

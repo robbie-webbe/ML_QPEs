@@ -52,7 +52,7 @@ for i in range(len(indices)):
     #if there is a M1 detection, perform the same analysis
     if cat[1].data.field('CCDM1')[i] != -32768 :
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=M1&extension=FTZ&name=SRCTSR"
-        os.system('wget -O -q --show-progress _dl_temp_/source_m1lc.tar "'+pn_url+'"')
+        os.system('wget -O _dl_temp_/source_m1lc.tar "'+pn_url+'"')
         
         if os.path.getsize('_dl_temp_/source_m1lc.tar') != 0:
             os.chdir('_dl_temp_/')

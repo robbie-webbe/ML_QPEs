@@ -51,7 +51,7 @@ for i in range(len(indices)):
         #create a url for the pn data if it does exist
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=PN&extension=FTZ&name=SRCTSR"
         #try and download the data
-        os.system('wget -O -q --show-progress _dl_temp_/source_pnlc.tar "'+pn_url+'"')
+        os.system('wget -O _dl_temp_/source_pnlc.tar "'+pn_url+'"')
         
         #if the file is non-zero in size
         if os.path.getsize('_dl_temp_/source_pnlc.tar') != 0:

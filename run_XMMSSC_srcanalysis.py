@@ -54,7 +54,7 @@ for i in range(len(indices)):
         os.system('wget -O -q --show-progress _dl_temp_/source_pnlc.tar "'+pn_url+'"')
         
         #if the file is non-zero in size
-        if os.path.getsize('_dl_temp_/source_pnlc.tar') != 0:
+        if os.path.getsize(os.getcwd()+'/_dl_temp_/source_pnlc.tar') != 0:
             #extract the files from the zipped archive
             os.chdir('_dl_temp_/')
             os.system('tar -xf source_pnlc.tar')

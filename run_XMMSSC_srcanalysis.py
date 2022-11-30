@@ -33,8 +33,10 @@ top_cands = []
 
 #determine which detections have time series that are long enough
 indices = list(np.where((cat[1].data.field('TSERIES') == True)&(cat[1].data.field('EP_ONTIME')>=50000))[0])
+no_objs = len(indices)
 
-for i in range(len(indices)):
+for i in range(no_objs):
+    print(i,'/',no_objs)
     index = indices[i]
     
     #pickout the obs id, and the source number in that obs
@@ -51,7 +53,7 @@ for i in range(len(indices)):
         #create a url for the pn data if it does exist
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=PN&extension=FTZ&name=SRCTSR"
         #try and download the data
-        os.system('wget -O -q --show-progress _dl_temp_/source_pnlc.tar "'+pn_url+'"')
+        os.system('wget -O _dl_temp_/source_pnlc.tar "'+pn_url+'"')
         
         #if the file is non-zero in size
         if os.path.getsize(os.getcwd()+'/_dl_temp_/source_pnlc.tar') != 0:
@@ -59,10 +61,20 @@ for i in range(len(indices)):
             os.chdir('_dl_temp_/')
             os.system('tar -xf source_pnlc.tar')
             os.chdir(os.getcwd()[:-10])
+            
             #for each downloaded lc, load the lightcurve to a stingray lc object
             for file in os.listdir('_dl_temp_/'+obsid+'/pps/'):
-                print(obsid,file)
                 lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
+                
+                try:
+                    lc == last_lc
+                except:
+                    pass
+                else:
+                    if lc == last_lc:
+                        continue
+                    
+                last_lc = lc
                 
                 #if the time binning for the pn lightcurve is greater than 250s then move on to the next file
                 if lc.dt > 250:
@@ -71,17 +83,31 @@ for i in range(len(indices)):
                 if lc.tseg < 50000:
                     continue
                 
+                #zero time the lightcurve and its gtis
+                lc = lc.shift(-lc.time[0])
+                
+                #remove the first and last 15ks
+                try:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
+                except:
+                    continue
+                else:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
+                
                 #rebin the lightcurves to make them the right length
-                lc_250 = lc.rebin(250)
-                lc_1000 = lc.rebin(1000)
-                
-                #shift the lightcurves to zero time
-                lc_250 = lc_250.shift(-lc.time[0])
-                lc_1000 = lc_1000.shift(-lc.time[0])
-                #remove the first and last 10ks
-                lc_250 = lc_250.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
-                lc_1000 = lc_1000.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
-                
+                try:
+                    lc_250 = lc.rebin(250)
+                except:
+                    continue
+                else:
+                    lc_250 = lc.rebin(250)
+                try:
+                    lc_1000 = lc.rebin(1000)
+                except:
+                    continue
+                else:
+                    lc_1000 = lc.rebin(1000)
+                                
                 #determine the features from the lightcurves
                 feats_250 = np.asarray([list(lcfeat([lc_250.time,lc_250.countrate],qpe='?'))])
                 feats_1000 = np.asarray([list(lcfeat([lc_1000.time,lc_1000.countrate],qpe='?'))])
@@ -119,14 +145,14 @@ for i in range(len(indices)):
                     plt.close()
                         
         #remove any temporarily downloaded files                                
-        os.system('rm -r _dl_temp_/'+obsid+'/')
+            os.system('rm -r _dl_temp_/'+obsid+'/')
         os.system('rm _dl_temp_/source_pnlc.tar')
         
         
     #if there is a M1 detection, perform the same analysis
     if cat[1].data.field('CCDM1')[i] != -32768 :
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=M1&extension=FTZ&name=SRCTSR"
-        os.system('wget -O -q --show-progress _dl_temp_/source_m1lc.tar "'+pn_url+'"')
+        os.system('wget -O _dl_temp_/source_m1lc.tar "'+pn_url+'"')
         
         if os.path.getsize('_dl_temp_/source_m1lc.tar') != 0:
             os.chdir('_dl_temp_/')
@@ -135,18 +161,42 @@ for i in range(len(indices)):
             for file in os.listdir('_dl_temp_/'+obsid+'/pps/'):
                 lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
                 
+                try:
+                    lc == last_lc
+                except:
+                    pass
+                else:
+                    if lc == last_lc:
+                        continue
+                    
+                last_lc = lc
+                
                 if lc.dt > 250:
                     continue
                 if lc.tseg < 50000:
                     continue
                 
-                lc_250 = lc.rebin(250)
-                lc_1000 = lc.rebin(1000)
-                lc_250 = lc_250.shift(-lc.time[0])
-                lc_1000 = lc_1000.shift(-lc.time[0])
-                lc_250 = lc_250.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
-                lc_1000 = lc_1000.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
+                lc = lc.shift(-lc.time[0])
+                try:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
+                except:
+                    continue
+                else:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
                 
+                try:
+                    lc_250 = lc.rebin(250)
+                except:
+                    continue
+                else:
+                    lc_250 = lc.rebin(250)
+                try:
+                    lc_1000 = lc.rebin(1000)
+                except:
+                    continue
+                else:
+                    lc_1000 = lc.rebin(1000)
+                    
                 feats_250 = np.asarray([list(lcfeat([lc_250.time,lc_250.countrate],qpe='?'))])
                 feats_1000 = np.asarray([list(lcfeat([lc_1000.time,lc_1000.countrate],qpe='?'))])
                 
@@ -179,14 +229,14 @@ for i in range(len(indices)):
                         fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                 
-        os.system('rm -r _dl_temp_/'+obsid+'/')
+            os.system('rm -r _dl_temp_/'+obsid+'/')
         os.system('rm _dl_temp_/source_m1lc.tar')
         
 
     #if there is a M2 detection, follow the same analysis
     if cat[1].data.field('CCDM2')[i] != -32768 :
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=M2&extension=FTZ&name=SRCTSR"
-        os.system('wget -O -q --show-progress _dl_temp_/source_m2lc.tar "'+pn_url+'"')
+        os.system('wget -O _dl_temp_/source_m2lc.tar "'+pn_url+'"')
         
         if os.path.getsize('_dl_temp_/source_m2lc.tar') != 0:
             os.chdir('_dl_temp_/')
@@ -196,17 +246,41 @@ for i in range(len(indices)):
                 print(obsid,file)
                 lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
                 
+                try:
+                    lc == last_lc
+                except:
+                    pass
+                else:
+                    if lc == last_lc:
+                        continue
+                
+                last_lc = lc
+                
                 if lc.dt > 250:
                     continue
                 if lc.tseg < 50000:
                     continue
                 
-                lc_250 = lc.rebin(250)
-                lc_1000 = lc.rebin(1000)
-                lc_250 = lc_250.shift(-lc.time[0])
-                lc_1000 = lc_1000.shift(-lc.time[0])
-                lc_250 = lc_250.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
-                lc_1000 = lc_1000.truncate(start=12500,stop=(lc_250.time[-1]-12500),method='time')
+                lc = lc.shift(-lc.time[0])
+                try:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
+                except:
+                    continue
+                else:
+                    lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
+                
+                try:
+                    lc_250 = lc.rebin(250)
+                except:
+                    continue
+                else:
+                    lc_250 = lc.rebin(250)
+                try:
+                    lc_1000 = lc.rebin(1000)
+                except:
+                    continue
+                else:
+                    lc_1000 = lc.rebin(1000)
                 
                 feats_250 = np.asarray([list(lcfeat([lc_250.time,lc_250.countrate],qpe='?'))])
                 feats_1000 = np.asarray([list(lcfeat([lc_1000.time,lc_1000.countrate],qpe='?'))])
@@ -241,7 +315,7 @@ for i in range(len(indices)):
                         fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                                         
-        os.system('rm -r _dl_temp_/'+obsid+'/')    
+            os.system('rm -r _dl_temp_/'+obsid+'/')    
         os.system('rm _dl_temp_/source_m2lc.tar')
 
 

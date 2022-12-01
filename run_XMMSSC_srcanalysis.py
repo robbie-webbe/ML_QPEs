@@ -89,8 +89,6 @@ for i in range(no_objs):
                 #remove the first and last 15ks
                 try:
                     lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
-                except IndexError:
-                    continue
                 except:
                     continue
                 else:
@@ -181,8 +179,6 @@ for i in range(no_objs):
                 lc = lc.shift(-lc.time[0])
                 try:
                     lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
-                except IndexError:
-                    continue
                 except:
                     continue
                 else:
@@ -268,8 +264,6 @@ for i in range(no_objs):
                 lc = lc.shift(-lc.time[0])
                 try:
                     lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')
-                except IndexError:
-                    continue
                 except:
                     continue
                 else:

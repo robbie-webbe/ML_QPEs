@@ -21,3 +21,8 @@ working_dir/
 
 .spyproject/workspace.ini
 4XMMSSC/4XMM_DR12cat_v1.0.fits
+
+4XMMSSC/top_cand_plots/conf_80/.DS_Store
+4XMMSSC/top_cand_plots/conf_90/.DS_Store
+4XMMSSC/top_cand_plots/conf_95/.DS_Store
+4XMMSSC/top_cand_plots/conf_99/.DS_Store

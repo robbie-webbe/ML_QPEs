@@ -88,6 +88,15 @@ for i in range(no_objs):
                 #zero time the lightcurve and its gtis
                 lc = lc.shift(-lc.time[0])
                 
+                #check there are still valid gtis
+                try:
+                    (lc.gti == []).all()
+                except:
+                    pass
+                else:
+                    if (lc.gti == []).all():
+                        continue
+                
                 #remove the first and last 15ks
                 try:
                     lc = lc.truncate(start=15000,stop=(lc.time[-1]-15000),method='time')

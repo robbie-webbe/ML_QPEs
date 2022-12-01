@@ -129,13 +129,13 @@ for i in range(no_objs):
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
-                    outfile_name = cat[1].data.field('SRCID')[index]+'_'+obsid+'_'+srcnum+'_pn'+file[13]+'.pdf'
+                    outfile_name = srcid+'_'+obsid+'_'+srcnum+'_pn'+file[13]+'.pdf'
                     fig, axs = plt.subplots(2,1,sharex=True)
                     axs[0].plot(lc_250.time,lc_250.countrate,color='b')
                     axs[1].plot(lc_1000.time,lc_1000.countrate,color='b')
                     axs[0].set(ylabel='Count rate')
                     axs[1].set(xlabel='Time (s)',ylabel='Count rate')
-                    fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+cat[1].data.field('SRC_NUM')[index]+' PN')
+                    fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' PN')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
                     elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
@@ -213,13 +213,13 @@ for i in range(no_objs):
     #             if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
     #                 top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
     #                                     'M1'+file[13],pred_250[1],pred_1000[1]])
-    #                 outfile_name = cat[1].data.field('SRCID')[index]+'_'+obsid+'_'+srcnum+'_m1'+file[13]+'.pdf'
+    #                 outfile_name = srcid+'_'+obsid+'_'+srcnum+'_m1'+file[13]+'.pdf'
     #                 fig, axs = plt.subplots(2,1,sharex=True)
     #                 axs[0].plot(lc_250.time,lc_250.countrate,color='b')
     #                 axs[1].plot(lc_1000.time,lc_1000.countrate,color='b')
     #                 axs[0].set(ylabel='Count rate')
     #                 axs[1].set(xlabel='Time (s)',ylabel='Count rate')
-    #                 fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+cat[1].data.field('SRC_NUM')[index]+' M1')
+    #                 fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' M1')
     #                 if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
     #                     fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
     #                 elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
@@ -295,13 +295,13 @@ for i in range(no_objs):
     #             if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
     #                 top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
     #                                     'M2'+file[13],pred_250[1],pred_1000[1]])
-    #                 outfile_name = cat[1].data.field('SRCID')[index]+'_'+obsid+'_'+srcnum+'_m2'+file[13]+'.pdf'
+    #                 outfile_name = srcid+'_'+obsid+'_'+srcnum+'_m2'+file[13]+'.pdf'
     #                 fig, axs = plt.subplots(2,1,sharex=True)
     #                 axs[0].plot(lc_250.time,lc_250.countrate,color='b')
     #                 axs[1].plot(lc_1000.time,lc_1000.countrate,color='b')
     #                 axs[0].set(ylabel='Count rate')
     #                 axs[1].set(xlabel='Time (s)',ylabel='Count rate')
-    #                 fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+cat[1].data.field('SRC_NUM')[index]+' M2')
+    #                 fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' M2')
     #                 if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
     #                     fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
     #                 elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:

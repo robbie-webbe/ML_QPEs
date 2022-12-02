@@ -88,14 +88,11 @@ for i in range(no_objs):
                 #zero time the lightcurve and its gtis
                 lc = lc.shift(-lc.time[0])
                 
-                #check there are still valid gtis
-                try:
-                    (lc.gti == []).all()
-                except:
-                    pass
-                else:
-                    if (lc.gti == []).all():
-                        continue
+                #check if truncating the files will remove any valid gtis
+                if lc.gti[-1][1] < 15000:
+                    continue
+                if lc.gti[0][0] > (lc.time[-1] - 15000):
+                    continue
                 
                 #remove the first and last 15ks
                 try:

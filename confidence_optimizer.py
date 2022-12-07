@@ -29,7 +29,7 @@ def f1_opt(input_file):
         probabilities[i] = prob_string
         
     
-    confidence_vals = np.arange(0,1.001,0.001)
+    confidence_vals = np.arange(0,1.000001,0.000001)
     accuracies = np.zeros(confidence_vals.shape)
     purities = np.zeros(len(confidence_vals))
     completenesses = np.zeros(len(confidence_vals))

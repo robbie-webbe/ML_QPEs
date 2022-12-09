@@ -1,5 +1,5 @@
 # Veusz saved document (version 3.4.0.1)
-# Saved at 2022-12-04T18:11:29.258413
+# Saved at 2022-12-09T12:40:53.273950
 
 SetCompatLevel(1)
 AddImportPath('/Users/do19150/Gits/ML_QPE/Plots')
@@ -32,11 +32,13 @@ Set('direction', 'vertical')
 To('..')
 Add('xy', name='xy1', autoadd=False)
 To('xy1')
+Set('marker', 'triangle')
+Set('color', 'green')
 Set('xData', 't1')
 Set('yData', 'r1')
 Set('PlotLine/hide', True)
 Set('MarkerLine/hide', True)
-Set('MarkerFill/color', 'blue')
+Set('MarkerFill/color', 'green')
 To('..')
 To('..')
 To('..')

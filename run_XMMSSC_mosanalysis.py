@@ -30,6 +30,8 @@ dt1000_prob_model = tf.keras.Sequential([dt1000_model, tf.keras.layers.Softmax()
 preds_dt250 = []
 preds_dt1000 = []
 top_cands = []
+features_dt250 = []
+features_dt1000 = []
 
 #determine which detections have time series that are long enough
 indices = list(np.where((cat[1].data.field('TSERIES') == True)&(cat[1].data.field('EP_ONTIME')>=50000))[0])
@@ -220,6 +222,11 @@ for i in range(no_objs):
                 preds_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'M1'+file[13],pred_1000[1]])
     
+                features_dt250.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'M1'+file[13],feats_250])
+                features_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'M1'+file[13],feats_1000])
+    
                 if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M1'+file[13],pred_250[1],pred_1000[1]])
@@ -231,13 +238,13 @@ for i in range(no_objs):
                     axs[1].set(xlabel='Time (s)',ylabel='Count rate')
                     fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' M1')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_99/'+outfile_name)
                     elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_95/'+outfile_name)
                     elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_90/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                         
             os.system('rm -r _dl_temp_/'+obsid+'/')
@@ -307,6 +314,11 @@ for i in range(no_objs):
                 preds_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'M2'+file[13],pred_1000[1]])
     
+                features_dt250.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'M2'+file[13],feats_250])
+                features_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'M2'+file[13],feats_1000])
+    
                 if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M2'+file[13],pred_250[1],pred_1000[1]])
@@ -316,15 +328,15 @@ for i in range(no_objs):
                     axs[1].plot(lc_1000.time,lc_1000.countrate,color='b')
                     axs[0].set(ylabel='Count rate')
                     axs[1].set(xlabel='Time (s)',ylabel='Count rate')
-                    fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' M1')
+                    fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' M2')
                     if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_99/'+outfile_name)
                     elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_95/'+outfile_name)
                     elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_90/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
+                        fig.savefig('4XMMSSC/mos_cand_plots/conf_80/'+outfile_name)
                     plt.close()
                         
             os.system('rm -r _dl_temp_/'+obsid+'/')
@@ -343,6 +355,13 @@ top_candidates = pd.DataFrame(data=top_cands, columns=['SRCID','OBSID','SRC_NUM'
 predictions_dt250.to_csv('4XMMSSC/predictions_mosdt250.csv')
 predictions_dt1000.to_csv('4XMMSSC/predictions_mosdt1000.csv')
 top_candidates.to_csv('4XMMSSC/top_QPE_cands_mos.csv')
+
+features_dt250 = np.asarray(features_dt250)
+features_dt1000 = np.asarray(features_dt1000)
+features_dt250 = pd.DataFrame(data=features_dt250, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','FEAT_VALS'],dtype=object)
+features_dt1000 = pd.DataFrame(data=features_dt1000, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','FEAT_VALS'],dtype=object)
+features_dt250.to_csv('4XMMSSC/features_mosdt250.csv')
+features_dt1000.to_csv('4XMMSSC/features_mosdt1000.csv')
 
 
 

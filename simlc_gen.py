@@ -87,11 +87,10 @@ for i in tqdm(range(int(N_lcs/2))):
     #generate the lcs
     lc = TK_LC(T=Period,dt=tbin,beta=wqpe_slopes[i])
     #shift them such that all points are positive
-    min_point = min(lc[1])
-    shift_factor = 1+np.abs(np.random.randn())
+    min_point = np.abs(min(lc[1]))
+    shift_factor = 10+np.random.randn()
     lightcurve = list(lc[1])
     lightcurve += min_point*shift_factor
-    
     wo_qpe_arr[i+1,:] = lightcurve
     
 
@@ -105,11 +104,11 @@ qpe_slopes = np.abs(np.random.normal(slope_mean,slope_std,int(N_lcs/2)))
 print('Pre QPEs')
 for i in tqdm(range(int(N_lcs/2))):
     lc = TK_LC(T=Period,dt=tbin,beta=qpe_slopes[i])
-    min_point = min(lc[1])
-    shift_factor = 1+np.abs(np.random.randn())
+    min_point = np.abs(min(lc[1]))
+    shift_factor = 10+np.random.randn()
     lightcurve = list(lc[1])
     lightcurve += min_point*shift_factor
-    qpe_arr[i+1,:] = lc[1]
+    qpe_arr[i+1,:] = lightcurve
 
 #import the eruption characteristics file
 eruption_chars = pd.read_csv('Obs/eruption_profiles.csv',index_col=0)

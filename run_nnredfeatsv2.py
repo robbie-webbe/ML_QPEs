@@ -21,26 +21,9 @@ from itertools import combinations
 dt = 50
 
 #import the training/validation data and the real & simulated testing data
-if dt == 50:
-    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt50.csv',delimiter=',')
-elif dt == 250:
-    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt250.csv',delimiter=',')
-else:
-    train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt1000.csv',delimiter=',')
-    
-if dt == 50:
-    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt50.csv',delimiter=',')
-elif dt == 250:
-    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt250.csv',delimiter=',')
-else:
-    simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt1000.csv',delimiter=',')
-    
-if dt == 50:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt50.csv',dtype='object')
-elif dt == 250:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt250.csv',dtype='object')
-else:
-    reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt1000.csv',dtype='object')
+train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt'+str(int(dt))+'.csv',delimiter=',')
+simlc_test_data = np.loadtxt(os.getcwd()+'/Features/simtest_data_dt'+str(int(dt))+'.csv',delimiter=',')
+reallc_test_data = pd.read_csv(os.getcwd()+'/Features/realobs_test_data_dt'+str(int(dt))+'.csv',dtype='object')
     
 reallc_test_data = reallc_test_data.astype({'ObsID':'str','STD/Mean':'float32','Prop > 1STD':'float32','Prop > 2STD':'float32',
                                             'Prop > 3STD':'float32','Prop > 4STD':'float32','Prop > 5STD':'float32','Prop > 6STD':'float32',

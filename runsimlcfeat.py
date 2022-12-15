@@ -10,23 +10,25 @@ import numpy as np
 from lcfeaturegen import lcfeat
 from tqdm import tqdm
 
-qpe_data = np.loadtxt('LCGen/Diff_dt/qpe_sample_dt1000.csv',delimiter=',')
+dt=1000
+
+qpe_data = np.loadtxt('LCGen/Diff_dt/qpe_sample_dt'+str(int(dt))+'.csv',delimiter=',')
 qpe_features = np.zeros((len(qpe_data)-1,15))
 
 for i in tqdm(range(50000)): 
     lc = [qpe_data[0],qpe_data[i+1]]
     qpe_features[i] = lcfeat(lc,qpe=1)
 
-np.savetxt('Features/qpe_feats_dt1000.csv',qpe_features,delimiter=',')
+np.savetxt('Features/qpe_feats_dt'+str(int(dt))+'.csv',qpe_features,delimiter=',')
 
 
 
 #
-no_qpe_data = np.loadtxt('LCGen/Diff_dt/no_qpe_sample_dt1000.csv',delimiter=',')
+no_qpe_data = np.loadtxt('LCGen/Diff_dt/no_qpe_sample_dt'+str(int(dt))+'.csv',delimiter=',')
 no_qpe_features = np.zeros((len(no_qpe_data)-1,15))
 #    
 for i in tqdm(range(50000)): 
     lc = [no_qpe_data[0],no_qpe_data[i+1]]
     no_qpe_features[i] = lcfeat(lc,qpe=0)
 #
-np.savetxt('Features/no_qpe_feats_dt1000.csv',no_qpe_features,delimiter=',')
+np.savetxt('Features/no_qpe_feats_dt'+str(int(dt))+'.csv',no_qpe_features,delimiter=',')

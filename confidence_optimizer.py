@@ -118,7 +118,7 @@ for file in all_files:
     if ('_dt'+str(tbin)+'_') in file:
         files.append(file)
         
-out_arr = np.empty((len(files),15),dtype=object)
+out_arr = np.empty((len(files),18),dtype=object)
 
 for i in tqdm(range(len(files))):
     combo_number = int(files[i].split('_')[0][12:])
@@ -139,10 +139,13 @@ for i in tqdm(range(len(files))):
     out_arr[i,12] = opt_results[1,990000]
     out_arr[i,13] = opt_results[2,990000]
     out_arr[i,14] = opt_results[3,990000]
+    out_arr[i,15] = opt_results[1,999000]
+    out_arr[i,16] = opt_results[2,999000]
+    out_arr[i,17] = opt_results[3,999000]
     
 
 out_df = pd.DataFrame(data=out_arr,columns=['Combo','Opt Acc.','Conf Range','80% Acc','80% Pur','80% Comp',
                                '90% Acc','90% Pur','90% Comp','95% Acc','95% Pur','95% Comp',
-                               '99% Acc','99% Pur','99% Comp'],dtype=object)
+                               '99% Acc','99% Pur','99% Comp','99.9% Acc','99.9% Pur','99.9% Comp'],dtype=object)
 
 out_df.to_csv('CO_results/conf_opt_'+str(feat_nos)+'feats_dt'+str(tbin)+'.csv',index=False)

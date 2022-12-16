@@ -8,8 +8,12 @@ Created on Tue Nov 15 10:32:35 2022
 
 import numpy as np
 import pandas as pd
+import sys
+import os
 
-def f1_opt(input_file):
+from tqdm import tqdm
+
+def f1_opt(input_file, print_out = False):
     '''
     Function to take an input file of predictions from a neural network
     and iterate over possible confidence values in order to find the 
@@ -81,21 +85,64 @@ def f1_opt(input_file):
     #opt_com = np.where(completenesses == max(completenesses))[0]
     opt_f1s = np.where(f1scores == max(f1scores))[0]
     
-    print('The maximum accuracy was: ',accuracies[opt_acc[0]])
-    if len(opt_acc) > 1:
-        print('This was achieved at a confidence values between: ',confidence_vals[opt_acc[0]],' and ',confidence_vals[opt_acc[-1]],'\n')
-    else:
-        print('This was achieved at a confidence value of: ',confidence_vals[opt_acc],'\n')
-    
-    
-    print('The maximum F1 score was: ',f1scores[opt_f1s[0]])
-    if len(opt_f1s) > 1:
-        print('This was achieved at a confidence values between: ',confidence_vals[opt_f1s[0]],' and ',confidence_vals[opt_f1s[-1]])
-    else:
-        print('This was achieved at a confidence value of: ',confidence_vals[opt_f1s])
-    print('This was achieved with a purity of ',purities[opt_f1s[0]],' and a completeness of ',completenesses[opt_f1s[0]],'\n','\n','\n')
+    if print_out:
+        print('The maximum accuracy was: ',accuracies[opt_acc[0]])
+        if len(opt_acc) > 1:
+            print('This was achieved at a confidence values between: ',confidence_vals[opt_acc[0]],' and ',confidence_vals[opt_acc[-1]],'\n')
+        else:
+            print('This was achieved at a confidence value of: ',confidence_vals[opt_acc],'\n')
+        
+        
+        print('The maximum F1 score was: ',f1scores[opt_f1s[0]])
+        if len(opt_f1s) > 1:
+            print('This was achieved at a confidence values between: ',confidence_vals[opt_f1s[0]],' and ',confidence_vals[opt_f1s[-1]])
+        else:
+            print('This was achieved at a confidence value of: ',confidence_vals[opt_f1s])
+        print('This was achieved with a purity of ',purities[opt_f1s[0]],' and a completeness of ',completenesses[opt_f1s[0]],'\n','\n','\n')
+        
+    return np.asarray((confidence_vals,accuracies,purities,completenesses,f1scores))
     
                 
+
+#determine number of features and time binning being optimised
+feat_nos = int(sys.argv[1])
+tbin = int(sys.argv[2])
+
+#load overall features information
+old_df = pd.read_csv('NN_results/'+str(feat_nos)+'feats_dt'+str(tbin)+'_overall_accuracy.csv')
+
+#pick all files with that many features
+all_files = sorted(os.listdir('NN_results/'+str(feat_nos)+'feats/'))
+files = []
+for file in all_files:
+    if ('_dt'+str(tbin)+'_') in file:
+        files.append(file)
+        
+out_arr = np.empty((len(files),15),dtype=object)
+
+for i in tqdm(range(len(files))):
+    combo_number = int(files[i].split('_')[0][12:])
+    opt_results = f1_opt('NN_results/'+str(feat_nos)+'feats/'+files[i])
+    opt_acc_idxs = np.where(opt_results[1] == max(opt_results[1]))[0]
+    out_arr[i,0] = old_df['Features Used'][int(combo_number)]
+    out_arr[i,1] = opt_results[1][opt_acc_idxs[0]]
+    out_arr[i,2] = [opt_results[0][opt_acc_idxs[0]],opt_results[0][opt_acc_idxs[-1]]]
+    out_arr[i,3] = opt_results[1,800000]
+    out_arr[i,4] = opt_results[2,800000]
+    out_arr[i,5] = opt_results[3,800000]
+    out_arr[i,6] = opt_results[1,900000]
+    out_arr[i,7] = opt_results[2,900000]
+    out_arr[i,8] = opt_results[3,900000]
+    out_arr[i,9] = opt_results[1,950000]
+    out_arr[i,10] = opt_results[2,950000]
+    out_arr[i,11] = opt_results[3,950000]
+    out_arr[i,12] = opt_results[1,990000]
+    out_arr[i,13] = opt_results[2,990000]
+    out_arr[i,14] = opt_results[3,990000]
     
-    
-    
+
+out_df = pd.DataFrame(data=out_arr,columns=['Combo','Opt Acc.','Conf Range','80% Acc','80% Pur','80% Comp',
+                               '90% Acc','90% Pur','90% Comp','95% Acc','95% Pur','95% Comp',
+                               '99% Acc','99% Pur','99% Comp'],dtype=object)
+
+out_df.to_csv('CO_results/conf_opt_'+str(feat_nos)+'feats_dt'+str(tbin)+'.csv',index=False)

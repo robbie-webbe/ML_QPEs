@@ -33,7 +33,7 @@ def f1_opt(input_file, print_out = False):
         probabilities[i] = prob_string
         
     
-    confidence_vals = np.arange(0,1.000001,0.000001)
+    confidence_vals = np.arange(0,1.00001,0.00001)
     accuracies = np.zeros(confidence_vals.shape)
     purities = np.zeros(len(confidence_vals))
     completenesses = np.zeros(len(confidence_vals))
@@ -127,21 +127,21 @@ for i in tqdm(range(len(files))):
     out_arr[i,0] = old_df['Features Used'][int(combo_number)]
     out_arr[i,1] = opt_results[1][opt_acc_idxs[0]]
     out_arr[i,2] = [opt_results[0][opt_acc_idxs[0]],opt_results[0][opt_acc_idxs[-1]]]
-    out_arr[i,3] = opt_results[1,800000]
-    out_arr[i,4] = opt_results[2,800000]
-    out_arr[i,5] = opt_results[3,800000]
-    out_arr[i,6] = opt_results[1,900000]
-    out_arr[i,7] = opt_results[2,900000]
-    out_arr[i,8] = opt_results[3,900000]
-    out_arr[i,9] = opt_results[1,950000]
-    out_arr[i,10] = opt_results[2,950000]
-    out_arr[i,11] = opt_results[3,950000]
-    out_arr[i,12] = opt_results[1,990000]
-    out_arr[i,13] = opt_results[2,990000]
-    out_arr[i,14] = opt_results[3,990000]
-    out_arr[i,15] = opt_results[1,999000]
-    out_arr[i,16] = opt_results[2,999000]
-    out_arr[i,17] = opt_results[3,999000]
+    out_arr[i,3] = opt_results[1,80000]
+    out_arr[i,4] = opt_results[2,80000]
+    out_arr[i,5] = opt_results[3,80000]
+    out_arr[i,6] = opt_results[1,90000]
+    out_arr[i,7] = opt_results[2,90000]
+    out_arr[i,8] = opt_results[3,90000]
+    out_arr[i,9] = opt_results[1,95000]
+    out_arr[i,10] = opt_results[2,95000]
+    out_arr[i,11] = opt_results[3,95000]
+    out_arr[i,12] = opt_results[1,99000]
+    out_arr[i,13] = opt_results[2,99000]
+    out_arr[i,14] = opt_results[3,99000]
+    out_arr[i,15] = opt_results[1,99900]
+    out_arr[i,16] = opt_results[2,99900]
+    out_arr[i,17] = opt_results[3,99900]
     
 
 out_df = pd.DataFrame(data=out_arr,columns=['Combo','Opt Acc.','Conf Range','80% Acc','80% Pur','80% Comp',

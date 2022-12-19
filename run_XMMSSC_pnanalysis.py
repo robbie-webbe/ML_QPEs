@@ -21,15 +21,19 @@ from lcfeaturegen import lcfeat
 cat = fits.open(os.getcwd()+'/4XMMSSC/4XMM_DR12cat_v1.0.fits')
 
 #load the saved 14 feature dt250 and dt1000 models
+dt50_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt50')
 dt250_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt250')
 dt1000_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt1000')
+dt50_prob_model = tf.keras.Sequential([dt50_model, tf.keras.layers.Softmax()])
 dt250_prob_model = tf.keras.Sequential([dt250_model, tf.keras.layers.Softmax()])
 dt1000_prob_model = tf.keras.Sequential([dt1000_model, tf.keras.layers.Softmax()])
 
 #create empty lists for wip
+preds_dt50 = []
 preds_dt250 = []
 preds_dt1000 = []
 top_cands = []
+features_dt50 = []
 features_dt250 = []
 features_dt1000 = []
 
@@ -106,6 +110,12 @@ for i in range(no_objs):
                 
                 #rebin the lightcurves to make them the right length
                 try:
+                    lc_50 = lc.rebin(50)
+                except:
+                    continue
+                else:
+                    lc_50 = lc.rebin(50)
+                try:
                     lc_250 = lc.rebin(250)
                 except:
                     continue
@@ -119,18 +129,24 @@ for i in range(no_objs):
                     lc_1000 = lc.rebin(1000)
                                 
                 #determine the features from the lightcurves
+                feats_50 = np.asarray([list(lcfeat([lc_50.time,lc_50.countrate],qpe='?'))])
                 feats_250 = np.asarray([list(lcfeat([lc_250.time,lc_250.countrate],qpe='?'))])
                 feats_1000 = np.asarray([list(lcfeat([lc_1000.time,lc_1000.countrate],qpe='?'))])
                 
                 #find the prediction for the two feature sets and NNs
+                pred_50 = dt50_prob_model.predict(feats_50)[0]
                 pred_250 = dt250_prob_model.predict(feats_250)[0]
                 pred_1000 = dt1000_prob_model.predict(feats_1000)[0] 
                 
+                preds_dt50.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'PN'+file[13],pred_50[1]])
                 preds_dt250.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'PN'+file[13],pred_250[1]])
                 preds_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'PN'+file[13],pred_1000[1]])
                 
+                features_dt50.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
+                                    'PN'+file[13],feats_50])
                 features_dt250.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'PN'+file[13],feats_250])
                 features_dt1000.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
@@ -138,20 +154,21 @@ for i in range(no_objs):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_250[1] > 0.99 and pred_1000[1] > 0.99:
+                if pred_50[1] > 0.99 and pred_250[1] > 0.99 and pred_1000[1] > 0.99:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
-                                        'PN'+file[13],pred_250[1],pred_1000[1]])
+                                        'PN'+file[13],pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
                     outfile_name = srcid+'_'+obsid+'_'+srcnum+'_pn'+file[13]+'.pdf'
-                    fig, axs = plt.subplots(2,1,sharex=True)
-                    axs[0].plot(lc_250.time,lc_250.countrate,color='b')
-                    axs[1].plot(lc_1000.time,lc_1000.countrate,color='b')
-                    axs[0].set(ylabel='Count rate')
-                    axs[1].set(xlabel='Time (s)',ylabel='Count rate')
+                    fig, axs = plt.subplots(3,1,sharex=True)
+                    axs[0].plot(lc_50.time,lc_50.countrate,color='b')
+                    axs[1].plot(lc_250.time,lc_250.countrate,color='b')
+                    axs[2].plot(lc_1000.time,lc_1000.countrate,color='b')
+                    axs[1].set(ylabel='Count rate')
+                    axs[2].set(xlabel='Time (s)')
                     fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' PN')
-                    if pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
+                    if pred_50[1] >= 0.9999 and pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99.99/'+outfile_name)
-                    elif pred_250[1] >= 0.999 and pred_1000[1] >= 0.999:
+                    elif pred_50[1] >= 0.999 and pred_250[1] >= 0.999 and pred_1000[1] >= 0.999:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99.9/'+outfile_name)
                     else:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
@@ -327,25 +344,30 @@ for i in range(no_objs):
     #     os.system('rm _dl_temp_/source_m2lc.tar')
         
 #send the data to an array
+preds_dt50 = np.asarray(preds_dt50)
 preds_dt250 = np.asarray(preds_dt250)
 preds_dt1000 = np.asarray(preds_dt1000)
 top_cands = np.asarray(top_cands)
 
 
 #create the output dataframes
+predictions_dt50 = pd.DataFrame(data=preds_dt50, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
 predictions_dt250 = pd.DataFrame(data=preds_dt250, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
 predictions_dt1000 = pd.DataFrame(data=preds_dt1000, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
-top_candidates = pd.DataFrame(data=top_cands, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','CONF_DT250','CONF_DT1000'])
+top_candidates = pd.DataFrame(data=top_cands, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','CONF_DT50','CONF_DT250','CONF_DT1000'])
 
+predictions_dt50.to_csv('4XMMSSC/predictions_pndt50.csv')
 predictions_dt250.to_csv('4XMMSSC/predictions_pndt250.csv')
 predictions_dt1000.to_csv('4XMMSSC/predictions_pndt1000.csv')
 top_candidates.to_csv('4XMMSSC/top_QPE_cands_pn.csv')
 
-
+features_dt50 = np.asarray(features_dt50)
 features_dt250 = np.asarray(features_dt250)
 features_dt1000 = np.asarray(features_dt1000)
+features_dt50 = pd.DataFrame(data=features_dt50, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','FEAT_VALS'],dtype=object)
 features_dt250 = pd.DataFrame(data=features_dt250, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','FEAT_VALS'],dtype=object)
 features_dt1000 = pd.DataFrame(data=features_dt1000, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','FEAT_VALS'],dtype=object)
+features_dt50.to_csv('4XMMSSC/features_pndt50.csv')
 features_dt250.to_csv('4XMMSSC/features_pndt250.csv')
 features_dt1000.to_csv('4XMMSSC/features_pndt1000.csv')
 

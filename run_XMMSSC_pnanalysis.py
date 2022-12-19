@@ -138,7 +138,7 @@ for i in range(no_objs):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_250[1] > 0.8 and pred_1000[1] > 0.8:
+                if pred_250[1] > 0.99 and pred_1000[1] > 0.99:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -149,14 +149,12 @@ for i in range(no_objs):
                     axs[0].set(ylabel='Count rate')
                     axs[1].set(xlabel='Time (s)',ylabel='Count rate')
                     fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' PN')
-                    if pred_250[1] >= 0.99 and pred_1000[1] >= 0.99:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
-                    elif pred_250[1] >= 0.95 and pred_1000[1] >= 0.95:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_95/'+outfile_name)
-                    elif pred_250[1] >= 0.90 and pred_1000[1] >= 0.90:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_90/'+outfile_name)
+                    if pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.99/'+outfile_name)
+                    elif pred_250[1] >= 0.999 and pred_1000[1] >= 0.999:
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_80/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
                     plt.close()
                         
         #remove any temporarily downloaded files                                

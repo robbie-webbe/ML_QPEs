@@ -166,10 +166,12 @@ for i in range(no_objs):
                     axs[1].set(ylabel='Count rate')
                     axs[2].set(xlabel='Time (s)')
                     fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' PN')
-                    if pred_50[1] >= 0.9999 and pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
+                    if pred_50[1] == 1.0 and pred_250[1] == 1.0 and pred_1000[1] == 1.0:
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_1/'+outfile_name)
+                    elif pred_50[1] >= 0.999999 and pred_250[1] >= 0.999999 and pred_1000[1] >= 0.999999:
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9999/'+outfile_name)
+                    elif pred_50[1] >= 0.9999 and pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99.99/'+outfile_name)
-                    elif pred_50[1] >= 0.999 and pred_250[1] >= 0.999 and pred_1000[1] >= 0.999:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9/'+outfile_name)
                     else:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
                     plt.close()

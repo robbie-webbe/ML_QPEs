@@ -72,7 +72,12 @@ for i in range(no_objs):
             
             #for each downloaded lc, load the lightcurve to a stingray lc object
             for file in os.listdir('_dl_temp_/'+obsid+'/pps/'):
-                lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
+                try:
+                    lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
+                except:
+                    continue
+                else:
+                    lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
                 
                 try:
                     lc == last_lc
@@ -154,7 +159,7 @@ for i in range(no_objs):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_50[1] > 0.99 and pred_250[1] > 0.99 and pred_1000[1] > 0.99:
+                if pred_50[1] > 0.999999 and pred_250[1] > 0.999999 and pred_1000[1] > 0.999999:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -168,12 +173,8 @@ for i in range(no_objs):
                     fig.suptitle('SRCID '+srcid+' Observation '+obsid+' Source '+str(cat[1].data.field('SRC_NUM')[index])+' PN')
                     if pred_50[1] == 1.0 and pred_250[1] == 1.0 and pred_1000[1] == 1.0:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_1/'+outfile_name)
-                    elif pred_50[1] >= 0.999999 and pred_250[1] >= 0.999999 and pred_1000[1] >= 0.999999:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9999/'+outfile_name)
-                    elif pred_50[1] >= 0.9999 and pred_250[1] >= 0.9999 and pred_1000[1] >= 0.9999:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.99/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9999/'+outfile_name)
                     plt.close()
                         
         #remove any temporarily downloaded files                                

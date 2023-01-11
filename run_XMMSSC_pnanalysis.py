@@ -90,7 +90,7 @@ for i in range(no_objs):
                 last_lc = lc
                 
                 #if the time binning for the pn lightcurve is greater than 250s then move on to the next file
-                if lc.dt > 250:
+                if lc.dt > 50:
                     continue
                 #if the length of the pn curve is less than 50ks then move to the next file
                 if lc.tseg < 50000:
@@ -159,7 +159,7 @@ for i in range(no_objs):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_50[1] > 0.999999 and pred_250[1] > 0.999999 and pred_1000[1] > 0.999999:
+                if pred_50[1] > 0.99999 and pred_250[1] > 0.9999 and pred_1000[1] == 1.0:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
@@ -174,7 +174,7 @@ for i in range(no_objs):
                     if pred_50[1] == 1.0 and pred_250[1] == 1.0 and pred_1000[1] == 1.0:
                         fig.savefig('4XMMSSC/top_cand_plots/conf_1/'+outfile_name)
                     else:
-                        fig.savefig('4XMMSSC/top_cand_plots/conf_99.9999/'+outfile_name)
+                        fig.savefig('4XMMSSC/top_cand_plots/conf_cut/'+outfile_name)
                     plt.close()
                         
         #remove any temporarily downloaded files                                

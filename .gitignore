@@ -28,4 +28,6 @@ working_dir/
 4XMMSSC/top_cand_plots/conf_99/.DS_Store
 BAD_NN_results.zip
 4XMMSSC/bad_features/*
-4XMMSSC/top_cand_plots/
+4XMMSSC/top_cand_plots/*
+4XMMSSC/bad_features/top_cand_plots/*
+4XMMSSC/bad_features/top_cand_plots/multi_det_obs/*

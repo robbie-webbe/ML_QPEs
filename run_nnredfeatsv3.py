@@ -17,8 +17,7 @@ import keras_tuner as kt
 from random import sample, shuffle
 from itertools import combinations
 
-
-dt = 250
+dt = 1000
 
 #import the training/validation data and the real & simulated testing data
 train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt'+str(int(dt))+'.csv',delimiter=',')

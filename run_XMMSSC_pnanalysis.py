@@ -132,6 +132,9 @@ for i in range(no_objs):
                     continue
                 else:
                     lc_1000 = lc.rebin(1000)
+                    
+                if lc.meanrate < 0.01:
+                    continue
                                 
                 #determine the features from the lightcurves
                 feats_50 = np.asarray([list(lcfeat([lc_50.time,lc_50.countrate],qpe='?'))])

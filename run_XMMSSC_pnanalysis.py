@@ -38,7 +38,7 @@ features_dt250 = []
 features_dt1000 = []
 
 #determine which detections have time series that are long enough
-indices = list(np.where((cat[1].data.field('TSERIES') == True)&(cat[1].data.field('EP_ONTIME')>=50000))[0])
+indices = list(np.where((cat[1].data.field('TSERIES') == True)&(cat[1].data.field('EP_ONTIME')>=50000)&(cat[1].data.field('SUM_FLAG')==0))[0])
 no_objs = len(indices)
 
 for i in range(no_objs):

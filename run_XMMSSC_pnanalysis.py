@@ -164,7 +164,7 @@ for i in range(no_objs):
                 #the strong candidate df output array
                 if pred_50[1] > 0.99999 and pred_250[1] > 0.9999 and pred_1000[1] == 1.0:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
-                                        'PN'+file[13],pred_50[1],pred_250[1],pred_1000[1]])
+                                        'PN'+file[13],lc.meanrate,pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
                     outfile_name = srcid+'_'+obsid+'_'+srcnum+'_pn'+file[13]+'.pdf'
                     fig, axs = plt.subplots(3,1,sharex=True)
@@ -197,7 +197,7 @@ top_cands = np.asarray(top_cands)
 predictions_dt50 = pd.DataFrame(data=preds_dt50, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
 predictions_dt250 = pd.DataFrame(data=preds_dt250, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
 predictions_dt1000 = pd.DataFrame(data=preds_dt1000, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','QPE_CONF'],dtype=object)
-top_candidates = pd.DataFrame(data=top_cands, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','CONF_DT50','CONF_DT250','CONF_DT1000'])
+top_candidates = pd.DataFrame(data=top_cands, columns=['SRCID','OBSID','SRC_NUM','EP_ONTIME','INST','PN_RATE','CONF_DT50','CONF_DT250','CONF_DT1000'])
 
 predictions_dt50.to_csv('4XMMSSC/predictions_pndt50.csv')
 predictions_dt250.to_csv('4XMMSSC/predictions_pndt250.csv')

@@ -17,7 +17,7 @@ import keras_tuner as kt
 from random import sample, shuffle
 from itertools import combinations
 
-dt = 50
+dt = 1000
 
 #import the training/validation data and the real & simulated testing data
 train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt'+str(int(dt))+'.csv',delimiter=',')
@@ -257,6 +257,6 @@ def build_test_NN(no_feats,inc_feats=False,exc_feats=False,combo_min=0,combo_max
     
     return output_df
     
-build_test_NN(int(sys.argv[1]),inc_feats=[8],exc_feats=[0,13],combo_min=int(sys.argv[2]),combo_max=int(sys.argv[3]))
+build_test_NN(int(sys.argv[1]),inc_feats=[8],exc_feats=[13],combo_min=int(sys.argv[2]),combo_max=int(sys.argv[3]))
 
 

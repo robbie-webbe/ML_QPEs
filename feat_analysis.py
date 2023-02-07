@@ -84,6 +84,14 @@ def feat_quality(feature,dt=250):
     f1opt_df = pd.read_csv('CO_results/conf_opt_1feats_dt'+str(dt)+'.csv')
     f2_df = pd.read_csv('NN_results/2feats_dt'+str(dt)+'_overall_accuracy.csv')
     f2opt_df = pd.read_csv('CO_results/conf_opt_2feats_dt'+str(dt)+'.csv')
+    f3_df = pd.read_csv('NN_results/3feats_dt'+str(dt)+'_overall_accuracy.csv')
+    f3opt_df = pd.read_csv('CO_results/conf_opt_3feats_dt'+str(dt)+'.csv')
+    f4_df = pd.read_csv('NN_results/4feats_dt'+str(dt)+'_overall_accuracy.csv')
+    f4opt_df = pd.read_csv('CO_results/conf_opt_4feats_dt'+str(dt)+'.csv')
+    f10_df = pd.read_csv('NN_results/10feats_dt'+str(dt)+'_overall_accuracy.csv')
+    f10opt_df = pd.read_csv('CO_results/conf_opt_10feats_dt'+str(dt)+'.csv')
+    f11_df = pd.read_csv('NN_results/11feats_dt'+str(dt)+'_overall_accuracy.csv')
+    f11opt_df = pd.read_csv('CO_results/conf_opt_11feats_dt'+str(dt)+'.csv')
     f12_df = pd.read_csv('NN_results/12feats_dt'+str(dt)+'_overall_accuracy.csv')
     f12opt_df = pd.read_csv('CO_results/conf_opt_12feats_dt'+str(dt)+'.csv')
     f13_df = pd.read_csv('NN_results/13feats_dt'+str(dt)+'_overall_accuracy.csv')
@@ -96,6 +104,22 @@ def feat_quality(feature,dt=250):
     f2_accs = []
     f2_f1s = []
     f2opt_accs = []
+    
+    f3_accs = []
+    f3_f1s = []
+    f3opt_accs = []
+    
+    f4_accs = []
+    f4_f1s = []
+    f4opt_accs = []
+    
+    f10_accs = []
+    f10_f1s = []
+    f10opt_accs = []
+    
+    f11_accs = []
+    f11_f1s = []
+    f11opt_accs = []
     
     f12_accs = []
     f12_f1s = []
@@ -122,7 +146,43 @@ def feat_quality(feature,dt=250):
             combo_list[j] = int(combo_list[j])
         if feature in combo_list:
             f2_accs.append(f2_df['Real Test Accuracy'][i])
-            f2_f1s.append(f2_df['Metric Value'][i])        
+            f2_f1s.append(f2_df['Metric Value'][i])      
+    for i in range(len(f3_df)):
+        combo_list = f3_df['Features Used'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f3_accs.append(f3_df['Real Test Accuracy'][i])
+            f3_f1s.append(f3_df['Metric Value'][i])  
+    for i in range(len(f4_df)):
+        combo_list = f4_df['Features Used'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f4_accs.append(f4_df['Real Test Accuracy'][i])
+            f4_f1s.append(f4_df['Metric Value'][i])  
+    for i in range(len(f10_df)):
+        combo_list = f10_df['Features Used'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f10_accs.append(f10_df['Real Test Accuracy'][i])
+            f10_f1s.append(f10_df['Metric Value'][i])  
+    for i in range(len(f11_df)):
+        combo_list = f11_df['Features Used'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f11_accs.append(f11_df['Real Test Accuracy'][i])
+            f11_f1s.append(f11_df['Metric Value'][i])  
     for i in range(len(f12_df)):
         combo_list = f12_df['Features Used'][i].replace('(','').replace(')','').split(',')
         if '' in combo_list:
@@ -158,6 +218,38 @@ def feat_quality(feature,dt=250):
             combo_list[j] = int(combo_list[j])
         if feature in combo_list:
             f2opt_accs.append(f2opt_df['Opt Acc.'][i])
+    for i in range(len(f3_df)):
+        combo_list = f3opt_df['Combo'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f3opt_accs.append(f3opt_df['Opt Acc.'][i])
+    for i in range(len(f4_df)):
+        combo_list = f4opt_df['Combo'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f4opt_accs.append(f4opt_df['Opt Acc.'][i])
+    for i in range(len(f10_df)):
+        combo_list = f10opt_df['Combo'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f10opt_accs.append(f10opt_df['Opt Acc.'][i])
+    for i in range(len(f11_df)):
+        combo_list = f11opt_df['Combo'][i].replace('(','').replace(')','').split(',')
+        if '' in combo_list:
+            combo_list.remove('')
+        for j in range(len(combo_list)):
+            combo_list[j] = int(combo_list[j])
+        if feature in combo_list:
+            f11opt_accs.append(f11opt_df['Opt Acc.'][i])
     for i in range(len(f12_df)):
         combo_list = f12opt_df['Combo'][i].replace('(','').replace(')','').split(',')
         if '' in combo_list:
@@ -177,6 +269,10 @@ def feat_quality(feature,dt=250):
     
     out_data = [[1,np.average(f1_accs),np.average(f1_f1s),np.average(f1opt_accs)],
                 [2,np.average(f2_accs),np.average(f2_f1s),np.average(f2opt_accs)],
+                [3,np.average(f3_accs),np.average(f3_f1s),np.average(f3opt_accs)],
+                [4,np.average(f4_accs),np.average(f4_f1s),np.average(f4opt_accs)],
+                [10,np.average(f10_accs),np.average(f10_f1s),np.average(f10opt_accs)],
+                [11,np.average(f11_accs),np.average(f11_f1s),np.average(f11opt_accs)],
                 [12,np.average(f12_accs),np.average(f12_f1s),np.average(f12opt_accs)],
                 [13,np.average(f13_accs),np.average(f13_f1s),np.average(f13opt_accs)]]
     quality_df = pd.DataFrame(data = np.asarray(out_data),columns=['No. Features','Avg Conf 0.5 Acc','Avg Conf 0.5 F1','Avg Opt Acc'])

@@ -18,8 +18,8 @@ full_results = pd.read_csv('NN_results/'+feat_no+'feats_dt'+tbin+'_overall_accur
 file_list = sorted(os.listdir('NN_results'))
 
 for file in file_list:
-    if feat_no in file:
-        if tbin in file:
+    if feat_no+'feats_' in file:
+        if '_dt'+tbin in file:
             if 'combos' in file:
                 combo_df = pd.read_csv('NN_results/'+file,na_filter=False)
                 combo_line = np.where(combo_df['Metric Value'] != '')[0]

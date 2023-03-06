@@ -154,8 +154,8 @@ for i in range(no_objs):
                 
                 #find the prediction for the two feature sets and NNs
                 pred_50 = dt50_prob_model.predict(feats_50)[0]
-                pred_250 = dt250_prob_model.predict(feats_250)[0]
-                pred_1000 = dt1000_prob_model.predict(feats_1000)[0] 
+                pred_250 = dt250_prob_model.predict(feats_250.reshape(1,6))[0]
+                pred_1000 = dt1000_prob_model.predict(feats_1000.reshape(1,8))[0] 
                 
                 preds_dt50.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                     'PN'+file[13],pred_50[1]])

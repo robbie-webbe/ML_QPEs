@@ -83,13 +83,17 @@ for i in range(no_objs):
                 #pick out the time and rate stamps for the 0.2-2.0keV bands
                 time = hdul[1].data.field('TIME')
                 rate = hdul[1].data.field('RATE')
+                soft_rate = hdul[1].data.field('RATE1') + hdul[1].data.field('RATE2') + hdul[1].data.field('RATE3')
                 
                 #pick out the invalid rate indices
                 rate_indices = np.where(np.ma.masked_invalid(rate).mask == False)[0]
+                soft_rate_indices = np.where(np.ma.masked_invalid(soft_rate).mask == False)[0]
                 
                 #create a masked event file for only valid rates
                 time = time[rate_indices]
                 rate = rate[rate_indices]
+                soft_time = time[soft_rate_indices]
+                soft_rate = soft_rate[soft_rate_indices]
                 
                 #extract the gti information
                 gtis = []
@@ -99,6 +103,8 @@ for i in range(no_objs):
                     
                 lc = Lightcurve(time,rate,input_counts=False,gti=gtis)
                 lc = lc.apply_gtis()
+                soft_lc = Lightcurve(soft_time,soft_rate,input_counts=False,gti=gtis)
+                soft_lc = soft_lc.apply_gtis()
                         
                 #if the time binning for the pn lightcurve is greater than 50s then move on to the next file
                 if lc.dt > 50:

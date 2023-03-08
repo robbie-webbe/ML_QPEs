@@ -16,14 +16,15 @@ from astropy.io import fits
 sys.path.append(os.getcwd()[:-6]+'Analysis_Funcs/General/')
 from stingray import Lightcurve
 from lcfeaturegen import lcfeat
+from fitsloader import XMMtolc
 
 #load the XMMSSC catalogue
 cat = fits.open(os.getcwd()+'/4XMMSSC/4XMM_DR12cat_v1.0.fits')
 
 #load the saved 14 feature dt250 and dt1000 models
 dt50_model = tf.keras.models.load_model('saved_models/1_feats/feature_set4_dt50')
-dt250_model = tf.keras.models.load_model('saved_models/6_feats/feature_set34_dt250')
-dt1000_model = tf.keras.models.load_model('saved_models/8_feats/feature_set51_dt1000')
+dt250_model = tf.keras.models.load_model('saved_models/6_feats/feature_set130_dt250')
+dt1000_model = tf.keras.models.load_model('saved_models/8_feats/feature_set146_dt1000')
 dt50_prob_model = tf.keras.Sequential([dt50_model, tf.keras.layers.Softmax()])
 dt250_prob_model = tf.keras.Sequential([dt250_model, tf.keras.layers.Softmax()])
 dt1000_prob_model = tf.keras.Sequential([dt1000_model, tf.keras.layers.Softmax()])
@@ -72,33 +73,22 @@ for i in range(no_objs):
             
             #for each downloaded lc, load the lightcurve to a stingray lc object
             for file in os.listdir('_dl_temp_/'+obsid+'/pps/'):
-                if 'X' in file:
-                    try:
-                        hdul = fits.open('_dl_temp_/'+obsid+'/pps/'+file)
-                    except:
+                try:
+                    lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
+                except:
+                    continue
+                else:
+                    lc = XMMtolc('_dl_temp_/'+obsid+'/pps/'+file)
+                
+                try:
+                    lc == last_lc
+                except:
+                    pass
+                else:
+                    if lc == last_lc:
                         continue
-                    else:
-                        hdul = fits.open('_dl_temp_/'+obsid+'/pps/'+file)
-                
-                #pick out the time and rate stamps for the 0.2-2.0keV bands
-                time = hdul[1].data.field('TIME')
-                rate = hdul[1].data.field('RATE')
-                
-                #pick out the invalid rate indices
-                rate_indices = np.where(np.ma.masked_invalid(rate).mask == False)[0]
-                
-                #create a masked event file for only valid rates
-                time = time[rate_indices]
-                rate = rate[rate_indices]
-                
-                #extract the gti information
-                gtis = []
-                gti_data = hdul[2].data
-                for i in range(len(gti_data)):
-                    gtis.append([gti_data[i][0],gti_data[i][1]])
                     
-                lc = Lightcurve(time,rate,input_counts=False,gti=gtis)
-                lc = lc.apply_gtis()
+                last_lc = lc
                         
                 #if the time binning for the pn lightcurve is greater than 50s then move on to the next file
                 if lc.dt > 50:

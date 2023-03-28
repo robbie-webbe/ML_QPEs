@@ -1,12 +1,13 @@
 # Veusz saved document (version 3.4.0.1)
-# Saved at 2023-01-07T11:23:09.933520
+# Saved at 2023-03-22T10:26:48.919836
 
 SetCompatLevel(1)
 AddImportPath('/Users/do19150/Gits/ML_QPE/Plots')
-ImportFileCSV('../Features/reallc_noqpe_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col10': 'rn9', 'col11': 'rn10', 'col12': 'rn11', 'col13': 'rn12', 'col14': 'rn13', 'col15': 'rn14', 'col2': 'rn1', 'col3': 'rn2', 'col4': 'rn3', 'col5': 'rn4', 'col6': 'rn5', 'col7': 'rn6', 'col8': 'rn7', 'col9': 'rn8'})
 ImportFileCSV('../Features/reallc_qpe_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col10': 'rq9', 'col11': 'rq10', 'col12': 'rq11', 'col13': 'rq12', 'col14': 'rq13', 'col15': 'rq14', 'col2': 'rq1', 'col3': 'rq2', 'col4': 'rq3', 'col5': 'rq4', 'col6': 'rq5', 'col7': 'rq6', 'col8': 'rq7', 'col9': 'rq8'})
-ImportFileCSV('../Features/no_qpe_feats_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col1': 'sn1', 'col10': 'sn10', 'col11': 'sn11', 'col12': 'sn12', 'col13': 'sn13', 'col14': 'sn14', 'col2': 'sn2', 'col3': 'sn3', 'col4': 'sn4', 'col5': 'sn5', 'col6': 'sn6', 'col7': 'sn7', 'col8': 'sn8', 'col9': 'sn9'})
 ImportFileCSV('../Features/qpe_feats_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col1': 'sq1', 'col10': 'sq10', 'col11': 'sq11', 'col12': 'sq12', 'col13': 'sq13', 'col14': 'sq14', 'col2': 'sq2', 'col3': 'sq3', 'col4': 'sq4', 'col5': 'sq5', 'col6': 'sq6', 'col7': 'sq7', 'col8': 'sq8', 'col9': 'sq9'})
+ImportFileCSV('../Features/reallc_noqpe_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col10': 'rn9', 'col11': 'rn10', 'col12': 'rn11', 'col13': 'rn12', 'col14': 'rn13', 'col15': 'rn14', 'col2': 'rn1', 'col3': 'rn2', 'col4': 'rn3', 'col5': 'rn4', 'col6': 'rn5', 'col7': 'rn6', 'col8': 'rn7', 'col9': 'rn8'})
+ImportFileCSV('../Features/no_qpe_feats_dt1000.csv', headermode='none', linked=True, numericlocale='en_GB', renames={'col1': 'sn1', 'col10': 'sn10', 'col11': 'sn11', 'col12': 'sn12', 'col13': 'sn13', 'col14': 'sn14', 'col2': 'sn2', 'col3': 'sn3', 'col4': 'sn4', 'col5': 'sn5', 'col6': 'sn6', 'col7': 'sn7', 'col8': 'sn8', 'col9': 'sn9'})
+Set('width', '20cm')
 Set('height', '25cm')
 Set('colorTheme', 'default-latest')
 Set('StyleSheet/axis-function/autoRange', 'next-tick')

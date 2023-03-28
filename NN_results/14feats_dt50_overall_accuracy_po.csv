@@ -1,0 +1,2 @@
+Features Used,Validation Accuracy,Sim Test Accuracy,Real Test Accuracy,Real Test Completeness,Real Test Purity,F1 Score,Metric Value
+"(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)",0.9477221965789795,0.944100022315979,0.695652186870575,0.9166666666666666,0.3548387096774194,0.5116279069767442,0.5116279069767442

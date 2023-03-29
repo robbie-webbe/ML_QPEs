@@ -115,7 +115,7 @@ old_df = pd.read_csv('NN_results/'+str(feat_nos)+'feats_dt'+str(tbin)+'_overall_
 all_files = sorted(os.listdir('NN_results/'+str(feat_nos)+'feats/'))
 files = []
 for file in all_files:
-    if ('_dt'+str(tbin)+'_realtest') in file:
+    if ('_dt'+str(tbin)+'_realtest.') in file:
         files.append(file)
         
 out_arr = np.empty((len(files),18),dtype=object)

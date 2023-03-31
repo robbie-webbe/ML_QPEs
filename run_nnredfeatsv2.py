@@ -19,7 +19,7 @@ from random import sample, shuffle
 from itertools import combinations
 
 
-dt = 250
+dt = 1000
 
 #import the training/validation data and the real & simulated testing data
 train_val_data = np.loadtxt(os.getcwd()+'/Features/train_val_data_dt'+str(int(dt))+'.csv',delimiter=',')
@@ -153,7 +153,7 @@ def build_test_NN(no_feats,combo_min=0,combo_max=10000):
         
         #create a model for the subset
         tuner = kt.Hyperband(model_builder, objective='val_accuracy', max_epochs=10, factor=3, 
-                             directory=str(no_feats)+'feats_wip', project_name='combo'+str(i), overwrite=True)
+                             directory=str(no_feats)+'feats_wip', project_name='po1_combo'+str(i), overwrite=True)
         
         stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
         #find the best confiuratioon for this set

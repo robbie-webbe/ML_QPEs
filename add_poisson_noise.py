@@ -15,9 +15,9 @@ sys.path.append(os.getcwd())
 
 from lcfeaturegen import lcfeat
 
-dt=50
+dt=250
 
-lcs = np.loadtxt('LCGen/Diff_dt/no_qpe_sample_dt'+str(dt)+'.csv',delimiter=',')
+lcs = np.loadtxt('LCGen/Diff_dt/qpe_sample_dt'+str(dt)+'.csv',delimiter=',')
 po_lcs = np.zeros(lcs.shape)
 po_lcs[0] = lcs[0]
 lcs_avg = np.average(lcs[1:])/dt
@@ -32,5 +32,5 @@ for i in tqdm(range(len(lcs)-1)):
 qpe_features = np.zeros((len(po_lcs)-1,15))
 for i in tqdm(range(50000)): 
     lc = [po_lcs[0],po_lcs[i+1]]
-    qpe_features[i] = lcfeat(lc,qpe=0)
-np.savetxt('Features/no_qpe_feats_dt'+str(dt)+'_po1.csv',qpe_features,delimiter=',')
+    qpe_features[i] = lcfeat(lc,qpe=1)
+np.savetxt('Features/qpe_feats_dt'+str(dt)+'_po1.csv',qpe_features,delimiter=',')

@@ -10,8 +10,8 @@ import numpy as np
 
 dt=50
 
-simq = np.loadtxt('Features/qpe_feats_dt'+str(int(dt))+'_po1.csv',delimiter=',')
-simnq = np.loadtxt('Features/no_qpe_feats_dt'+str(int(dt))+'_po1.csv',delimiter=',')
+simq = np.loadtxt('Features/qpe_feats_dt'+str(int(dt))+'_po04.csv',delimiter=',')
+simnq = np.loadtxt('Features/no_qpe_feats_dt'+str(int(dt))+'_po04.csv',delimiter=',')
 
 #split the simulated data into 90/10 training and validation/testing
 train_val_simq = simq[0:45000]
@@ -23,5 +23,5 @@ test_simnq = simnq[45000:]
 train_val_data = np.concatenate((train_val_simq,train_val_simnq))
 test_data = np.concatenate((test_simq,test_simnq))
 
-np.savetxt('Features/train_val_data_dt'+str(int(dt))+'_po1.csv',train_val_data,delimiter=',')
-np.savetxt('Features/simtest_data_dt'+str(int(dt))+'_po1.csv',test_data,delimiter=',')
+np.savetxt('Features/train_val_data_dt'+str(int(dt))+'_po04.csv',train_val_data,delimiter=',')
+np.savetxt('Features/simtest_data_dt'+str(int(dt))+'_po04.csv',test_data,delimiter=',')

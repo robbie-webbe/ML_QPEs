@@ -162,7 +162,7 @@ for i in range(no_objs):
                 
                 #if both predictions are greater than 90% QPE then the details to
                 #the strong candidate df output array
-                if pred_50[1] > 0.99999 and pred_250[1] > 0.9999 and pred_1000[1] == 1.0:
+                if pred_50[1] > 0.999 and pred_250[1] > 0.9999 and pred_1000[1] > 0.999:
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],lc.meanrate,pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder

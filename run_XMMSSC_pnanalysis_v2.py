@@ -200,7 +200,9 @@ for i in range(no_objs):
                         fig.savefig('4XMMSSC/lowe_results/top_cand_plots/conf_cut/'+outfile_name)
                     plt.close()
                         
-        #remove any temporarily downloaded files                                
+        #close the fits and remove any temporarily downloaded files
+            data.close()
+            data = 0
             os.system('rm -r _dl_temp_/'+obsid+'/')
         os.system('rm _dl_temp_/source_pnlc.tar')
         
@@ -348,7 +350,9 @@ for i in range(no_objs):
                         fig.savefig('4XMMSSC/lowe_results/top_cand_plots/conf_cut/'+outfile_name)
                     plt.close()
                         
-        #remove any temporarily downloaded files                                
+        #remove any temporarily downloaded files 
+            data.close()
+            data = 0                               
             os.system('rm -r _dl_temp_/'+obsid+'/')
         os.system('rm _dl_temp_/source_m1lc.tar')
         
@@ -495,7 +499,9 @@ for i in range(no_objs):
                         fig.savefig('4XMMSSC/lowe_results/top_cand_plots/conf_cut/'+outfile_name)
                     plt.close()
                         
-        #remove any temporarily downloaded files                                
+        #remove any temporarily downloaded files   
+            data.close()
+            data = 0                             
             os.system('rm -r _dl_temp_/'+obsid+'/')
         os.system('rm _dl_temp_/source_m2lc.tar')
 

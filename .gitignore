@@ -21,6 +21,7 @@ working_dir/
 
 .spyproject/workspace.ini
 4XMMSSC/4XMM_DR12cat_v1.0.fits
+4XMMSSC/4XMM_DR13cat_v1.0.fits
 
 BAD_NN_results.zip
 4XMMSSC/bad_features/*

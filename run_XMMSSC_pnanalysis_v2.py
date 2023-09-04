@@ -58,7 +58,7 @@ for i in range(no_objs):
         srcnum = srcnum[1:]
         
     #if there is a PN detection, try and download the data
-    if cat[1].data.field('CCDPN')[i] != -32768 :
+    if cat[1].data.field('CCDPN')[i] != -32768 and cat[1].data.field('PN_ONTIME')[i] >= 30000:
         #create a url for the pn data if it does exist
         pn_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=PN&extension=FTZ&name=SRCTSR"
         #try and download the data
@@ -112,8 +112,8 @@ for i in range(no_objs):
                 #if the time binning for the pn lightcurve is greater than 250s then move on to the next file
                 if lc.dt > 50:
                     continue
-                #if the length of the pn curve is less than 50ks then move to the next file
-                if lc.tseg < 50000:
+                #if the length of the pn curve is less than 30ks then move to the next file
+                if lc.tseg < 30000:
                     continue
                 
                 #zero time the lightcurve and its gtis
@@ -186,7 +186,7 @@ for i in range(no_objs):
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'PN'+file[13],lc.meanrate,pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
-                    outfile_name = srcid+'_'+obsid+'_'+srcnum+'_pn'+file[13]+'.pdf'
+                    outfile_name = obsid+'_'+srcnum+'_'+srcid+'_pn'+file[13]+'.pdf'
                     fig, axs = plt.subplots(3,1,sharex=True)
                     axs[0].plot(lc_50.time,lc_50.countrate,color='b')
                     axs[1].plot(lc_250.time,lc_250.countrate,color='b')
@@ -208,7 +208,7 @@ for i in range(no_objs):
         
         
     #if there is a M1 detection, try and download the data
-    if cat[1].data.field('CCDM1')[i] != -32768 :
+    if cat[1].data.field('CCDM1')[i] != -32768 and cat[1].data.field('M1_ONTIME')[i] >= 30000:
         #create a url for the m1 data if it does exist
         m1_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=M1&extension=FTZ&name=SRCTSR"
         #try and download the data
@@ -262,8 +262,8 @@ for i in range(no_objs):
                 #if the time binning for the m1 lightcurve is greater than 250s then move on to the next file
                 if lc.dt > 50:
                     continue
-                #if the length of the m1 curve is less than 50ks then move to the next file
-                if lc.tseg < 50000:
+                #if the length of the m1 curve is less than 30ks then move to the next file
+                if lc.tseg < 40000:
                     continue
                 
                 #zero time the lightcurve and its gtis
@@ -336,7 +336,7 @@ for i in range(no_objs):
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M1'+file[13],lc.meanrate,pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
-                    outfile_name = srcid+'_'+obsid+'_'+srcnum+'_m1'+file[13]+'.pdf'
+                    outfile_name = obsid+'_'+srcnum+'_'+srcid+'_m1'+file[13]+'.pdf'
                     fig, axs = plt.subplots(3,1,sharex=True)
                     axs[0].plot(lc_50.time,lc_50.countrate,color='b')
                     axs[1].plot(lc_250.time,lc_250.countrate,color='b')
@@ -357,7 +357,7 @@ for i in range(no_objs):
         os.system('rm _dl_temp_/source_m1lc.tar')
         
     #if there is a M2 detection, try and download the data
-    if cat[1].data.field('CCDM2')[i] != -32768 :
+    if cat[1].data.field('CCDM2')[i] != -32768 and cat[1].data.field('M2_ONTIME')[i] >= 30000:
         #create a url for the m2 data if it does exist
         m2_url = "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno="+obsid+"&sourceno="+srcnum+"&level=PPS&instname=M2&extension=FTZ&name=SRCTSR"
         #try and download the data
@@ -411,8 +411,8 @@ for i in range(no_objs):
                 #if the time binning for the m2 lightcurve is greater than 250s then move on to the next file
                 if lc.dt > 50:
                     continue
-                #if the length of the m2 curve is less than 50ks then move to the next file
-                if lc.tseg < 50000:
+                #if the length of the m2 curve is less than 30ks then move to the next file
+                if lc.tseg < 30000:
                     continue
                 
                 #zero time the lightcurve and its gtis
@@ -485,7 +485,7 @@ for i in range(no_objs):
                     top_cands.append([srcid,obsid,cat[1].data.field('SRC_NUM')[index],cat[1].data.field('EP_ONTIME')[index],
                                         'M2'+file[13],lc.meanrate,pred_50[1],pred_250[1],pred_1000[1]])
                     #and save the plots to a folder
-                    outfile_name = srcid+'_'+obsid+'_'+srcnum+'_m2'+file[13]+'.pdf'
+                    outfile_name = obsid+'_'+srcnum+'_'+srcid+'_m2'+file[13]+'.pdf'
                     fig, axs = plt.subplots(3,1,sharex=True)
                     axs[0].plot(lc_50.time,lc_50.countrate,color='b')
                     axs[1].plot(lc_250.time,lc_250.countrate,color='b')

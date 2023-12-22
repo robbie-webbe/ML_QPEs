@@ -14,15 +14,12 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from astropy.io import fits
 sys.path.append(os.getcwd()[:-6]+'Analysis_Funcs/General/')
-from stingray import Lightcurve
-from fitsloader import XMMtolc
-from lcfeaturegen import lcfeat
 from qpe_pred import det_qpe_feats, cleanup
 
 #load the XMMSSC catalogue
 cat = fits.open(os.getcwd()+'/4XMMSSC/4XMM_DR13cat_v1.0.fits')
 
-#load the saved 14 feature dt250 and dt1000 models
+#load the saved 14 feature dt50, dt250 and dt1000 models
 dt50_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt50')
 dt250_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt250')
 dt1000_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt1000')

@@ -63,12 +63,18 @@ def det_qpe_feats(obsid,src_num,inst='PN',full_band=False,po_noiselim=True):
     
     #try and download data
     try:
-        dl_dets = requests.get(url, timeout=30)
-    except:
-        print("There was an error while downloading the data.")
-        return 0,0,0,0
+        dl_dets = requests.get(url, timeout=(10,600))
+    except requests.exceptions.ReadTimeout:
+        try:
+            #if it fails give it a second go
+            dl_dets = requests.get(url, timeout=(10,6000))
+        except requests.exceptions.ReadTimeout:
+            print("There was an error while downloading the data.")
+            return 0,0,0,0
+        else:
+            dl_dets = requests.get(url, timeout=(10,6000))
     else:
-        dl_dets = requests.get(url, timeout=30)
+        dl_dets = requests.get(url, timeout=(10,600))
         
     #if the download is good then save to file
     if dl_dets.status_code == 200:

@@ -25,7 +25,7 @@ dt250_prob_model = tf.keras.Sequential([dt250_model, tf.keras.layers.Softmax()])
 dt1000_prob_model = tf.keras.Sequential([dt1000_model, tf.keras.layers.Softmax()])
 
 #create empty lists for output
-agn_num = []
+xrb_num = []
 srcids = []
 obsids = []
 src_nums = []
@@ -48,16 +48,16 @@ SSC_cat = fits.open('4XMMSSC/4XMM_DR13cat_v1.0.fits')
 
 #iterate AGN by AGN
 #find any instances of the AGN from the Tranin classification in the XMMSSC
-agn_idxs = np.where(type_cat[1].data.field('prediction') == 4)[0]
+xrb_idxs = np.where(type_cat[1].data.field('prediction') == 5)[0]
 k = 1
-for i in agn_idxs:
-    print(k,'/',len(agn_idxs))
+for i in xrb_idxs:
+    print(k,'/',len(xrb_idxs))
     k += 1
     #pick out the source ID to crossmatch with the XMMSSC catalogue
-    agn_srcid = type_cat[1].data[i][0]
+    xrb_srcid = type_cat[1].data[i][0]
     
     #find any entries in the XMMSSC
-    SSC_idxs = np.where(SSC_cat[1].data.field('SRCID') == agn_srcid)[0]
+    SSC_idxs = np.where(SSC_cat[1].data.field('SRCID') == xrb_srcid)[0]
     m = 1
 
     #for each of these lightcurves create predictions for QPEs
@@ -73,12 +73,15 @@ for i in agn_idxs:
         elif len(srcnum) == 4:
             srcnum = srcnum[1:]
             
-        agn_num.append(k)
-        srcids.append(agn_srcid)
+        xrb_num.append(k)
+        srcids.append(xrb_srcid)
         obsids.append(obsid)
         src_nums.append(srcnum)
         IAU_names.append(SSC_cat[1].data.field('IAUNAME')[j])
-        pn_exps.append(int(SSC_cat[1].data.field('PN_ONTIME')[j]))
+        if np.isfinite(SSC_cat[1].data.field('PN_ONTIME')[j]):
+            pn_exps.append(int(SSC_cat[1].data.field('PN_ONTIME')[j]))
+        else:
+            pn_exps.append(-0)
             
         #create lightcurves and features for that detection
         #if there is a PN detection, process the lightcurves
@@ -87,7 +90,7 @@ for i in agn_idxs:
             
             lc_50, lc_250, lc_1000, feature_list = det_qpe_feats(obsid,srcnum)
             
-            if lc_50 == lc_250 == lc_1000 == feature_list == 0:
+            if feature_list == 0:
                 avg_rates.append(-0)
                 features_dt50.append(np.zeros(14,dtype=int))
                 features_dt250.append(np.zeros(14,dtype=int))
@@ -118,15 +121,15 @@ for i in agn_idxs:
             preds_dt1000.append(pred_1000[1])
             
             #Then create an output plot for the lightcurve
-            outfile_name = str(agn_srcid)+'_'+obsid+'_'+srcnum+'_pnX.pdf'
+            outfile_name = str(xrb_srcid)+'_'+obsid+'_'+srcnum+'_pnX.pdf'
             fig, axs = plt.subplots(3,1,sharex=True)
             axs[0].plot(lc_50.time,lc_50.countrate,color='b')
             axs[1].plot(lc_250.time,lc_250.countrate,color='b')
             axs[2].plot(lc_1000.time,lc_1000.countrate,color='b')
             axs[1].set(ylabel='Count rate')
             axs[2].set(xlabel='Time (s)')
-            fig.suptitle('SRCID '+str(agn_srcid)+' Observation '+obsid+' Source '+str(SSC_cat[1].data.field('SRC_NUM')[j])+' PN')
-            fig.savefig('classified_QPE_preds/AGN_plots/'+outfile_name)
+            fig.suptitle('SRCID '+str(xrb_srcid)+' Observation '+obsid+' Source '+str(SSC_cat[1].data.field('SRC_NUM')[j])+' PN')
+            fig.savefig('classified_QPE_preds/extendXRB_plots/'+outfile_name)
             plt.close()
         
         #if no PN lightcurve information
@@ -155,5 +158,5 @@ df['FEATS1000'] = features_dt1000
 df['PRED50'] = preds_dt50
 df['PRED250'] = preds_dt250
 df['PRED1000'] = preds_dt1000
-df.to_csv('classified_QPE_preds/AGN_preds.csv',index=False)
+df.to_csv('classified_QPE_preds/extendXRB_preds.csv',index=False)
 

@@ -12,9 +12,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
+import gc
 from astropy.io import fits
 sys.path.append(os.getcwd()[:-6]+'Analysis_Funcs/General/')
 from qpe_pred import det_qpe_feats, cleanup
+
 
 #load the saved 14 feature dt50, dt250 and dt1000 models
 dt50_model = tf.keras.models.load_model('saved_models/14_feats/feature_set0_dt50')
@@ -48,9 +50,11 @@ SSC_cat = fits.open('4XMMSSC/4XMM_DR13cat_v1.0.fits')
 
 #iterate AGN by AGN
 #find any instances of the AGN from the Tranin classification in the XMMSSC
-xrb_idxs = np.where(type_cat[1].data.field('prediction') == 5)[0]
+xrb_idxs = np.where(type_cat[1].data.field('prediction') == 2)[0]
 k = 1
 for i in xrb_idxs:
+    garbage = gc.collect()
+    print("Garbage collector: collected","%d objects." % garbage)
     print(k,'/',len(xrb_idxs))
     k += 1
     #pick out the source ID to crossmatch with the XMMSSC catalogue
@@ -129,7 +133,7 @@ for i in xrb_idxs:
             axs[1].set(ylabel='Count rate')
             axs[2].set(xlabel='Time (s)')
             fig.suptitle('SRCID '+str(xrb_srcid)+' Observation '+obsid+' Source '+str(SSC_cat[1].data.field('SRC_NUM')[j])+' PN')
-            fig.savefig('classified_QPE_preds/extendXRB_plots/'+outfile_name)
+            fig.savefig('classified_QPE_preds/XRB_plots/'+outfile_name)
             plt.close()
         
         #if no PN lightcurve information
@@ -158,5 +162,5 @@ df['FEATS1000'] = features_dt1000
 df['PRED50'] = preds_dt50
 df['PRED250'] = preds_dt250
 df['PRED1000'] = preds_dt1000
-df.to_csv('classified_QPE_preds/extendXRB_preds.csv',index=False)
+df.to_csv('classified_QPE_preds/XRB_preds.csv',index=False)
 
